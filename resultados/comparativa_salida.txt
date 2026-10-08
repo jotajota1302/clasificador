@@ -1,0 +1,44 @@
+Evaluando nimble...
+   1/40    442 ms   2/40    704 ms   3/40    691 ms   4/40    693 ms   5/40    673 ms   6/40    674 ms   7/40    710 ms   8/40    723 ms   9/40    680 ms   10/40    704 ms   11/40    654 ms   12/40    699 ms   13/40    648 ms   14/40    674 ms   15/40    735 ms   16/40    633 ms   17/40    630 ms   18/40    683 ms   19/40    665 ms   20/40    681 ms   21/40    675 ms   22/40    701 ms   23/40    702 ms   24/40    643 ms   25/40    688 ms   26/40    672 ms   27/40    649 ms   28/40    685 ms   29/40    696 ms   30/40    723 ms   31/40    673 ms   32/40    655 ms   33/40    692 ms   34/40   1056 ms   35/40    680 ms   36/40    837 ms   37/40    861 ms   38/40    785 ms   39/40    721 ms   40/40    720 ms                                                            Evaluando qwen3:4b...
+   1/40   1724 ms   2/40   2249 ms   3/40   2120 ms   4/40   2454 ms   5/40   2350 ms   6/40   2316 ms   7/40   2267 ms   8/40   2108 ms   9/40   1702 ms   10/40   1800 ms   11/40   1582 ms   12/40   1932 ms   13/40   2588 ms   14/40   2160 ms   15/40   2157 ms   16/40   1696 ms   17/40   2153 ms   18/40   2019 ms   19/40   2219 ms   20/40   2352 ms   21/40   1750 ms   22/40   1890 ms   23/40   1789 ms   24/40   2001 ms   25/40   2291 ms   26/40   1674 ms   27/40   1931 ms   28/40   1676 ms   29/40   1514 ms   30/40   1748 ms   31/40   2161 ms   32/40   1816 ms   33/40   1833 ms   34/40   2220 ms   35/40   1785 ms   36/40   1982 ms   37/40   2057 ms   38/40   2068 ms   39/40   2012 ms   40/40   2107 ms                                                            Evaluando MiniMax-M3.1-Flash-Preview...
+  [MiniMax-M3.1-Flash-Preview] 1/40   1205 ms  [MiniMax-M3.1-Flash-Preview] 2/40    873 ms  [MiniMax-M3.1-Flash-Preview] 3/40    924 ms  [MiniMax-M3.1-Flash-Preview] 4/40   1131 ms  [MiniMax-M3.1-Flash-Preview] 5/40   1585 ms  [MiniMax-M3.1-Flash-Preview] 6/40   1171 ms  [MiniMax-M3.1-Flash-Preview] 7/40   1160 ms  [MiniMax-M3.1-Flash-Preview] 8/40   1061 ms  [MiniMax-M3.1-Flash-Preview] 9/40   1395 ms  [MiniMax-M3.1-Flash-Preview] 10/40    859 ms  [MiniMax-M3.1-Flash-Preview] 11/40   1798 ms  [MiniMax-M3.1-Flash-Preview] 12/40   1388 ms  [MiniMax-M3.1-Flash-Preview] 13/40   1162 ms  [MiniMax-M3.1-Flash-Preview] 14/40   2454 ms  [MiniMax-M3.1-Flash-Preview] 15/40   1553 ms  [MiniMax-M3.1-Flash-Preview] 16/40   2564 ms  [MiniMax-M3.1-Flash-Preview] 17/40   1424 ms  [MiniMax-M3.1-Flash-Preview] 18/40    950 ms  [MiniMax-M3.1-Flash-Preview] 19/40   1061 ms  [MiniMax-M3.1-Flash-Preview] 20/40   1172 ms  [MiniMax-M3.1-Flash-Preview] 21/40   2166 ms  [MiniMax-M3.1-Flash-Preview] 22/40    976 ms  [MiniMax-M3.1-Flash-Preview] 23/40   1038 ms  [MiniMax-M3.1-Flash-Preview] 24/40   1381 ms  [MiniMax-M3.1-Flash-Preview] 25/40   1700 ms  [MiniMax-M3.1-Flash-Preview] 26/40   2916 ms  [MiniMax-M3.1-Flash-Preview] 27/40   1024 ms  [MiniMax-M3.1-Flash-Preview] 28/40   1098 ms  [MiniMax-M3.1-Flash-Preview] 29/40    867 ms  [MiniMax-M3.1-Flash-Preview] 30/40   1635 ms  [MiniMax-M3.1-Flash-Preview] 31/40   1519 ms  [MiniMax-M3.1-Flash-Preview] 32/40   1591 ms  [MiniMax-M3.1-Flash-Preview] 33/40   1109 ms  [MiniMax-M3.1-Flash-Preview] 34/40   2177 ms  [MiniMax-M3.1-Flash-Preview] 35/40   1668 ms  [MiniMax-M3.1-Flash-Preview] 36/40   2080 ms  [MiniMax-M3.1-Flash-Preview] 37/40   1138 ms  [MiniMax-M3.1-Flash-Preview] 38/40   2798 ms  [MiniMax-M3.1-Flash-Preview] 39/40   1077 ms  [MiniMax-M3.1-Flash-Preview] 40/40   2022 ms                                                            Evaluando MiniMax-M3...
+  [MiniMax-M3] 1/40   5131 ms  [MiniMax-M3] 2/40   1458 ms  [MiniMax-M3] 3/40   2666 ms  [MiniMax-M3] 4/40   1702 ms  [MiniMax-M3] 5/40   2803 ms  [MiniMax-M3] 6/40   2651 ms  [MiniMax-M3] 7/40   1441 ms  [MiniMax-M3] 8/40   5302 ms  [MiniMax-M3] 9/40    960 ms  [MiniMax-M3] 10/40    760 ms  [MiniMax-M3] 11/40   1171 ms  [MiniMax-M3] 12/40   2015 ms  [MiniMax-M3] 13/40   1279 ms  [MiniMax-M3] 14/40   2427 ms  [MiniMax-M3] 15/40   5609 ms  [MiniMax-M3] 16/40   2051 ms  [MiniMax-M3] 17/40   1435 ms  [MiniMax-M3] 18/40   1269 ms  [MiniMax-M3] 19/40   1739 ms  [MiniMax-M3] 20/40   5509 ms  [MiniMax-M3] 21/40   1556 ms  [MiniMax-M3] 22/40   3167 ms  [MiniMax-M3] 23/40   1045 ms  [MiniMax-M3] 24/40   1417 ms  [MiniMax-M3] 25/40   1117 ms  [MiniMax-M3] 26/40   2199 ms  [MiniMax-M3] 27/40   1293 ms  [MiniMax-M3] 28/40  13484 ms  [MiniMax-M3] 29/40   1498 ms  [MiniMax-M3] 30/40   1994 ms  [MiniMax-M3] 31/40   1366 ms  [MiniMax-M3] 32/40   1217 ms  [MiniMax-M3] 33/40   4728 ms  [MiniMax-M3] 34/40   1821 ms  [MiniMax-M3] 35/40   1779 ms  [MiniMax-M3] 36/40   1319 ms  [MiniMax-M3] 37/40   1077 ms  [MiniMax-M3] 38/40   3529 ms  [MiniMax-M3] 39/40   3699 ms  [MiniMax-M3] 40/40   2225 ms                                                                                                       Comparativa · 40 tickets etiquetados                                            
+┌────────────────────────────┬────────┬───────────┬──────────┬────────────┬──────────┬────────┬───────────┬───────────────┐
+│ Modelo                     │ Equipo │ Reembolso │ Urgencia │ Las 3 bien │ ms media │ ms p95 │ JSON roto │ Tokens in/out │
+├────────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┤
+│ nimble                     │    92% │      100% │      82% │        78% │      698 │    860 │         0 │        1084/4 │
+├────────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┤
+│ qwen3:4b                   │    90% │      100% │      82% │        75% │     2006 │   2449 │         0 │        241/26 │
+├────────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┤
+│ MiniMax-M3.1-Flash-Preview │    92% │      100% │      88% │        80% │     1472 │   2787 │         0 │        401/46 │
+├────────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┤
+│ MiniMax-M3                 │   100% │      100% │      82% │        82% │     2523 │   5604 │         0 │       373/133 │
+└────────────────────────────┴────────┴───────────┴──────────┴────────────┴──────────┴────────┴───────────┴───────────────┘
+       nimble: si solo automatizo cuando confianza(equipo) >= umbral       
+┌────────┬───────────────┬────────────────────────────┬───────────────────┐
+│ Umbral │ Se automatiza │ Acierto en lo automatizado │ A revisión humana │
+├────────┼───────────────┼────────────────────────────┼───────────────────┤
+│    0.0 │          100% │                        92% │                 0 │
+│    0.5 │           88% │                        97% │                 5 │
+│    0.7 │           80% │                       100% │                 8 │
+│    0.8 │           70% │                       100% │                12 │
+│    0.9 │           42% │                       100% │                23 │
+└────────┴───────────────┴────────────────────────────┴───────────────────┘
+
+nimble falla 'equipo' en:
+  esperado=facturacion obtenido=otro        La tarjeta que tenía registrada ha caducado, ¿cómo pongo una nueva?
+  esperado=facturacion obtenido=tecnico     El servicio estuvo caído 2 días la semana pasada; quiero que me compen
+  esperado=tecnico     obtenido=facturacion Los pagos de nuestros clientes se están rechazando todos en el checkou
+
+qwen3:4b falla 'equipo' en:
+  esperado=facturacion obtenido=comercial   Quiero darme de baja y que me devolváis lo que queda del año.
+  esperado=comercial   obtenido=otro        ¿Tenéis programa de partners o de reseller?
+  esperado=facturacion obtenido=tecnico     El servicio estuvo caído 2 días la semana pasada; quiero que me compen
+  esperado=tecnico     obtenido=facturacion Los pagos de nuestros clientes se están rechazando todos en el checkou
+
+MiniMax-M3.1-Flash-Preview falla 'equipo' en:
+  esperado=facturacion obtenido=tecnico     El servicio estuvo caído 2 días la semana pasada; quiero que me compen
+  esperado=tecnico     obtenido=facturacion Los pagos de nuestros clientes se están rechazando todos en el checkou
+  esperado=otro        obtenido=comercial   Me gustaría proponer una colaboración para un artículo en nuestro blog
+
+Detalle guardado en resultados/comparativa.json

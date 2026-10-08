@@ -1,0 +1,2290 @@
+{
+ "nimble": [
+  {
+   "ticket": "Me habéis cobrado dos veces la suscripción de septiembre. Quiero que me devolváis el cargo duplicado.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 442.4970999825746,
+   "tin": 1105,
+   "tout": 4,
+   "confianza": 0.9244663142001078
+  },
+  {
+   "ticket": "La API devuelve error 500 desde esta mañana y tenemos la tienda caída. ¡Ayuda!",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 704.3845999287441,
+   "tin": 1096,
+   "tout": 4,
+   "confianza": 0.8630896849810632
+  },
+  {
+   "ticket": "¿Tenéis descuento para ONGs?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 691.3572000339627,
+   "tin": 1057,
+   "tout": 4,
+   "confianza": 0.94771345557003
+  },
+  {
+   "ticket": "El webhook de Stripe no llega a nuestro endpoint desde que cambiamos de dominio.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 692.8511000005528,
+   "tin": 1081,
+   "tout": 4,
+   "confianza": 0.9015070583133961
+  },
+  {
+   "ticket": "Quiero darme de baja y que me devolváis lo que queda del año.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 672.7621000027284,
+   "tin": 1084,
+   "tout": 4,
+   "confianza": 0.6696586049462192
+  },
+  {
+   "ticket": "¿Cómo cambio la dirección de facturación en la factura?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 674.0503000328317,
+   "tin": 1069,
+   "tout": 4,
+   "confianza": 0.9411983098683597
+  },
+  {
+   "ticket": "Hola, solo quería daros las gracias por la ayuda de ayer :)",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 710.2252000477165,
+   "tin": 1075,
+   "tout": 4,
+   "confianza": 0.7320693698939464
+  },
+  {
+   "ticket": "No puedo iniciar sesión, me dice que la contraseña es incorrecta aunque la he restablecido.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 723.4431999968365,
+   "tin": 1090,
+   "tout": 4,
+   "confianza": 0.8213128168245691
+  },
+  {
+   "ticket": "Toda la plataforma está caída para nuestros 3.000 usuarios, estamos perdiendo ventas cada minuto.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 679.7131999628618,
+   "tin": 1099,
+   "tout": 4,
+   "confianza": 0.7859438120545228
+  },
+  {
+   "ticket": "¿Cuánto cuesta el plan Enterprise para 200 usuarios?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 703.5763999447227,
+   "tin": 1078,
+   "tout": 4,
+   "confianza": 0.9368187958984338
+  },
+  {
+   "ticket": "Me habéis subido el precio sin avisar. Exijo que me devolváis la diferencia de este mes.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 654.182399972342,
+   "tin": 1102,
+   "tout": 4,
+   "confianza": 0.4880793083408086
+  },
+  {
+   "ticket": "El botón de exportar a PDF no hace nada en Firefox.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 698.5727000283077,
+   "tin": 1069,
+   "tout": 4,
+   "confianza": 0.8345827131403493
+  },
+  {
+   "ticket": "Necesito la factura de agosto con el CIF de la empresa, no con mi nombre.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 648.0718000093475,
+   "tin": 1087,
+   "tout": 4,
+   "confianza": 0.9455171874800395
+  },
+  {
+   "ticket": "Nos interesa una demo del producto para nuestro equipo de ventas la semana que viene.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 674.2080999538302,
+   "tin": 1078,
+   "tout": 4,
+   "confianza": 0.8597515226899509
+  },
+  {
+   "ticket": "Se ha filtrado la clave de API de producción en un repositorio público, necesito revocarla ya.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 734.9177000578493,
+   "tin": 1099,
+   "tout": 4,
+   "confianza": 0.905977928680847
+  },
+  {
+   "ticket": "Me ha llegado un cargo de 499 € que no reconozco. Devolvedme el dinero o lo denuncio al banco.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 632.6643999200314,
+   "tin": 1117,
+   "tout": 4,
+   "confianza": 0.3979181990841273
+  },
+  {
+   "ticket": "¿Ofrecéis precio especial si pagamos anual en lugar de mensual?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 629.768899991177,
+   "tin": 1078,
+   "tout": 4,
+   "confianza": 0.8985734202420218
+  },
+  {
+   "ticket": "La sincronización con Google Calendar duplica los eventos.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 682.9904000042006,
+   "tin": 1063,
+   "tout": 4,
+   "confianza": 0.9344213104020491
+  },
+  {
+   "ticket": "¿Dónde puedo descargar vuestro logo para una presentación?",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 664.6531000733376,
+   "tin": 1072,
+   "tout": 4,
+   "confianza": 0.7901148916613367
+  },
+  {
+   "ticket": "La tarjeta que tenía registrada ha caducado, ¿cómo pongo una nueva?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 680.6839000200853,
+   "tin": 1084,
+   "tout": 4,
+   "confianza": 0.3531339713000369
+  },
+  {
+   "ticket": "Estamos migrando 50.000 registros y la importación falla al 80 % siempre. Salimos a producción mañana.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 674.9687999254093,
+   "tin": 1117,
+   "tout": 4,
+   "confianza": 0.8293185860812181
+  },
+  {
+   "ticket": "Contraté el plan Pro por error, quería el Básico. ¿Me devolvéis la diferencia?",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 700.7568000117317,
+   "tin": 1096,
+   "tout": 4,
+   "confianza": 0.8593025983255146
+  },
+  {
+   "ticket": "¿Tenéis programa de partners o de reseller?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 702.1247999509797,
+   "tin": 1066,
+   "tout": 4,
+   "confianza": 0.8065108996116143
+  },
+  {
+   "ticket": "La app móvil se cierra sola al abrir la pestaña de informes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 642.8259999956936,
+   "tin": 1075,
+   "tout": 4,
+   "confianza": 0.8944056816562326
+  },
+  {
+   "ticket": "¿Estáis contratando? Me gustaría enviar mi currículum.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 688.179700053297,
+   "tin": 1072,
+   "tout": 4,
+   "confianza": 0.4180800919338111
+  },
+  {
+   "ticket": "El servicio estuvo caído 2 días la semana pasada; quiero que me compenséis devolviéndome esos días.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 671.7044999822974,
+   "tin": 1105,
+   "tout": 4,
+   "confianza": 0.5695563176448083
+  },
+  {
+   "ticket": "Los correos de notificación llegan a spam a todos nuestros clientes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 649.3955999612808,
+   "tin": 1072,
+   "tout": 4,
+   "confianza": 0.6909904310123982
+  },
+  {
+   "ticket": "Queremos ampliar de 10 a 40 licencias, ¿con quién hablo?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 684.9332000128925,
+   "tin": 1093,
+   "tout": 4,
+   "confianza": 0.9667840811650066
+  },
+  {
+   "ticket": "No me ha llegado la factura de este mes al correo.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 695.9296999266371,
+   "tin": 1066,
+   "tout": 4,
+   "confianza": 0.9718394423985653
+  },
+  {
+   "ticket": "Los pagos de nuestros clientes se están rechazando todos en el checkout desde hace una hora.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 722.7918999269605,
+   "tin": 1084,
+   "tout": 4,
+   "confianza": 0.3396838152459808
+  },
+  {
+   "ticket": "Me gustaría proponer una colaboración para un artículo en nuestro blog.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 673.405300010927,
+   "tin": 1069,
+   "tout": 4,
+   "confianza": 0.7186514177097973
+  },
+  {
+   "ticket": "Cancelé la suscripción hace dos meses y me seguís cobrando. Quiero que me devolváis esos cargos.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 654.5666999882087,
+   "tin": 1105,
+   "tout": 4,
+   "confianza": 0.8976125251017005
+  },
+  {
+   "ticket": "El panel tarda unos 10 segundos en cargar, antes era instantáneo.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 691.5022000903264,
+   "tin": 1078,
+   "tout": 4,
+   "confianza": 0.818310777935102
+  },
+  {
+   "ticket": "¿Hacéis descuento para startups en su primer año?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1056.3894999213517,
+   "tin": 1069,
+   "tout": 4,
+   "confianza": 0.945226132530765
+  },
+  {
+   "ticket": "Hemos detectado accesos desde IPs desconocidas a cuentas de administrador. ¿Estáis sufriendo un ataque?",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 680.3170000202954,
+   "tin": 1108,
+   "tout": 4,
+   "confianza": 0.9587110405201664
+  },
+  {
+   "ticket": "Quiero cambiar la forma de pago de tarjeta a transferencia bancaria.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 836.5421999478713,
+   "tin": 1069,
+   "tout": 4,
+   "confianza": 0.9150938936717413
+  },
+  {
+   "ticket": "¿Qué tal el fin de semana? Era broma, perdonad, me equivoqué de chat.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 861.3885999657214,
+   "tin": 1099,
+   "tout": 4,
+   "confianza": 0.917131768608041
+  },
+  {
+   "ticket": "La integración con Salesforce ha dejado de sincronizar contactos desde la última actualización.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 784.7146999556571,
+   "tin": 1075,
+   "tout": 4,
+   "confianza": 0.9614421407482238
+  },
+  {
+   "ticket": "Queremos un presupuesto formal para presentarlo a dirección antes del viernes.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 720.8977999398485,
+   "tin": 1072,
+   "tout": 4,
+   "confianza": 0.9628781106541967
+  },
+  {
+   "ticket": "Me cobrasteis el IVA dos veces en la última factura, reclamo la devolución del importe.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 719.5814999286085,
+   "tin": 1093,
+   "tout": 4,
+   "confianza": 0.9159439173349269
+  }
+ ],
+ "qwen3:4b": [
+  {
+   "ticket": "Me habéis cobrado dos veces la suscripción de septiembre. Quiero que me devolváis el cargo duplicado.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1724.0628999425098,
+   "tin": 249,
+   "tout": 24
+  },
+  {
+   "ticket": "La API devuelve error 500 desde esta mañana y tenemos la tienda caída. ¡Ayuda!",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 2249.391600023955,
+   "tin": 244,
+   "tout": 25
+  },
+  {
+   "ticket": "¿Tenéis descuento para ONGs?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2119.7890000185,
+   "tin": 231,
+   "tout": 24
+  },
+  {
+   "ticket": "El webhook de Stripe no llega a nuestro endpoint desde que cambiamos de dominio.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 2453.6684999475256,
+   "tin": 240,
+   "tout": 25
+  },
+  {
+   "ticket": "Quiero darme de baja y que me devolváis lo que queda del año.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 2349.9438000144437,
+   "tin": 240,
+   "tout": 29
+  },
+  {
+   "ticket": "¿Cómo cambio la dirección de facturación en la factura?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2316.139500006102,
+   "tin": 234,
+   "tout": 29
+  },
+  {
+   "ticket": "Hola, solo quería daros las gracias por la ayuda de ayer :)",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2266.6235000360757,
+   "tin": 237,
+   "tout": 29
+  },
+  {
+   "ticket": "No puedo iniciar sesión, me dice que la contraseña es incorrecta aunque la he restablecido.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2108.1515999976546,
+   "tin": 241,
+   "tout": 25
+  },
+  {
+   "ticket": "Toda la plataforma está caída para nuestros 3.000 usuarios, estamos perdiendo ventas cada minuto.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1701.8224000930786,
+   "tin": 247,
+   "tout": 25
+  },
+  {
+   "ticket": "¿Cuánto cuesta el plan Enterprise para 200 usuarios?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1799.742899951525,
+   "tin": 237,
+   "tout": 24
+  },
+  {
+   "ticket": "Me habéis subido el precio sin avisar. Exijo que me devolváis la diferencia de este mes.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 2
+   },
+   "ms": 1582.468800013885,
+   "tin": 246,
+   "tout": 24
+  },
+  {
+   "ticket": "El botón de exportar a PDF no hace nada en Firefox.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1932.0434000110254,
+   "tin": 235,
+   "tout": 25
+  },
+  {
+   "ticket": "Necesito la factura de agosto con el CIF de la empresa, no con mi nombre.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2587.5806000549346,
+   "tin": 241,
+   "tout": 29
+  },
+  {
+   "ticket": "Nos interesa una demo del producto para nuestro equipo de ventas la semana que viene.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2160.09389993269,
+   "tin": 238,
+   "tout": 29
+  },
+  {
+   "ticket": "Se ha filtrado la clave de API de producción en un repositorio público, necesito revocarla ya.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 2157.1219000034034,
+   "tin": 245,
+   "tout": 25
+  },
+  {
+   "ticket": "Me ha llegado un cargo de 499 € que no reconozco. Devolvedme el dinero o lo denuncio al banco.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 2
+   },
+   "ms": 1695.7746999105439,
+   "tin": 251,
+   "tout": 24
+  },
+  {
+   "ticket": "¿Ofrecéis precio especial si pagamos anual en lugar de mensual?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2153.1863000709563,
+   "tin": 238,
+   "tout": 29
+  },
+  {
+   "ticket": "La sincronización con Google Calendar duplica los eventos.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2018.7267999863252,
+   "tin": 233,
+   "tout": 25
+  },
+  {
+   "ticket": "¿Dónde puedo descargar vuestro logo para una presentación?",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2218.865199945867,
+   "tin": 236,
+   "tout": 29
+  },
+  {
+   "ticket": "La tarjeta que tenía registrada ha caducado, ¿cómo pongo una nueva?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2351.879099966027,
+   "tin": 241,
+   "tout": 29
+  },
+  {
+   "ticket": "Estamos migrando 50.000 registros y la importación falla al 80 % siempre. Salimos a producción mañana.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1749.5407999958843,
+   "tin": 252,
+   "tout": 25
+  },
+  {
+   "ticket": "Contraté el plan Pro por error, quería el Básico. ¿Me devolvéis la diferencia?",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 1890.3024999890476,
+   "tin": 245,
+   "tout": 24
+  },
+  {
+   "ticket": "¿Tenéis programa de partners o de reseller?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1789.2931000096723,
+   "tin": 232,
+   "tout": 24
+  },
+  {
+   "ticket": "La app móvil se cierra sola al abrir la pestaña de informes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2000.6740000098944,
+   "tin": 238,
+   "tout": 25
+  },
+  {
+   "ticket": "¿Estáis contratando? Me gustaría enviar mi currículum.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2291.241400060244,
+   "tin": 237,
+   "tout": 29
+  },
+  {
+   "ticket": "El servicio estuvo caído 2 días la semana pasada; quiero que me compenséis devolviéndome esos días.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1673.84599999059,
+   "tin": 249,
+   "tout": 25
+  },
+  {
+   "ticket": "Los correos de notificación llegan a spam a todos nuestros clientes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1930.724099976942,
+   "tin": 236,
+   "tout": 25
+  },
+  {
+   "ticket": "Queremos ampliar de 10 a 40 licencias, ¿con quién hablo?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1675.6435999413952,
+   "tin": 244,
+   "tout": 24
+  },
+  {
+   "ticket": "No me ha llegado la factura de este mes al correo.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1514.3611999228597,
+   "tin": 234,
+   "tout": 24
+  },
+  {
+   "ticket": "Los pagos de nuestros clientes se están rechazando todos en el checkout desde hace una hora.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1748.0565999867395,
+   "tin": 242,
+   "tout": 24
+  },
+  {
+   "ticket": "Me gustaría proponer una colaboración para un artículo en nuestro blog.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2160.530799999833,
+   "tin": 237,
+   "tout": 29
+  },
+  {
+   "ticket": "Cancelé la suscripción hace dos meses y me seguís cobrando. Quiero que me devolváis esos cargos.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1816.0742999752983,
+   "tin": 250,
+   "tout": 29
+  },
+  {
+   "ticket": "El panel tarda unos 10 segundos en cargar, antes era instantáneo.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1833.1215999787673,
+   "tin": 239,
+   "tout": 25
+  },
+  {
+   "ticket": "¿Hacéis descuento para startups en su primer año?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2220.3095000004396,
+   "tin": 234,
+   "tout": 29
+  },
+  {
+   "ticket": "Hemos detectado accesos desde IPs desconocidas a cuentas de administrador. ¿Estáis sufriendo un ataque?",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1785.4796000756323,
+   "tin": 250,
+   "tout": 25
+  },
+  {
+   "ticket": "Quiero cambiar la forma de pago de tarjeta a transferencia bancaria.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1982.1827000705525,
+   "tin": 237,
+   "tout": 24
+  },
+  {
+   "ticket": "¿Qué tal el fin de semana? Era broma, perdonad, me equivoqué de chat.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2056.9931000936776,
+   "tin": 244,
+   "tout": 29
+  },
+  {
+   "ticket": "La integración con Salesforce ha dejado de sincronizar contactos desde la última actualización.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 2068.3409000048414,
+   "tin": 241,
+   "tout": 25
+  },
+  {
+   "ticket": "Queremos un presupuesto formal para presentarlo a dirección antes del viernes.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2012.4308000085875,
+   "tin": 238,
+   "tout": 24
+  },
+  {
+   "ticket": "Me cobrasteis el IVA dos veces en la última factura, reclamo la devolución del importe.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 2106.8616000702605,
+   "tin": 245,
+   "tout": 24
+  }
+ ],
+ "MiniMax-M3.1-Flash-Preview": [
+  {
+   "ticket": "Me habéis cobrado dos veces la suscripción de septiembre. Quiero que me devolváis el cargo duplicado.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1204.590699984692,
+   "tin": 405,
+   "tout": 19
+  },
+  {
+   "ticket": "La API devuelve error 500 desde esta mañana y tenemos la tienda caída. ¡Ayuda!",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 872.8520000586286,
+   "tin": 404,
+   "tout": 19
+  },
+  {
+   "ticket": "¿Tenéis descuento para ONGs?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 924.1731999209151,
+   "tin": 393,
+   "tout": 18
+  },
+  {
+   "ticket": "El webhook de Stripe no llega a nuestro endpoint desde que cambiamos de dominio.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1131.0761999338865,
+   "tin": 401,
+   "tout": 19
+  },
+  {
+   "ticket": "Quiero darme de baja y que me devolváis lo que queda del año.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 1585.3085999842733,
+   "tin": 401,
+   "tout": 96
+  },
+  {
+   "ticket": "¿Cómo cambio la dirección de facturación en la factura?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1171.093299984932,
+   "tin": 395,
+   "tout": 50
+  },
+  {
+   "ticket": "Hola, solo quería daros las gracias por la ayuda de ayer :)",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1160.3604999836534,
+   "tin": 399,
+   "tout": 45
+  },
+  {
+   "ticket": "No puedo iniciar sesión, me dice que la contraseña es incorrecta aunque la he restablecido.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1061.0424999613315,
+   "tin": 404,
+   "tout": 19
+  },
+  {
+   "ticket": "Toda la plataforma está caída para nuestros 3.000 usuarios, estamos perdiendo ventas cada minuto.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1394.68379993923,
+   "tin": 404,
+   "tout": 19
+  },
+  {
+   "ticket": "¿Cuánto cuesta el plan Enterprise para 200 usuarios?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 859.4675000058487,
+   "tin": 395,
+   "tout": 18
+  },
+  {
+   "ticket": "Me habéis subido el precio sin avisar. Exijo que me devolváis la diferencia de este mes.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1797.6901000365615,
+   "tin": 406,
+   "tout": 108
+  },
+  {
+   "ticket": "El botón de exportar a PDF no hace nada en Firefox.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1388.1268000695854,
+   "tin": 397,
+   "tout": 19
+  },
+  {
+   "ticket": "Necesito la factura de agosto con el CIF de la empresa, no con mi nombre.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1162.107800017111,
+   "tin": 403,
+   "tout": 19
+  },
+  {
+   "ticket": "Nos interesa una demo del producto para nuestro equipo de ventas la semana que viene.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2454.3802000116557,
+   "tin": 401,
+   "tout": 82
+  },
+  {
+   "ticket": "Se ha filtrado la clave de API de producción en un repositorio público, necesito revocarla ya.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1552.9028000310063,
+   "tin": 406,
+   "tout": 56
+  },
+  {
+   "ticket": "Me ha llegado un cargo de 499 € que no reconozco. Devolvedme el dinero o lo denuncio al banco.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 2
+   },
+   "ms": 2563.9425000408664,
+   "tin": 412,
+   "tout": 106
+  },
+  {
+   "ticket": "¿Ofrecéis precio especial si pagamos anual en lugar de mensual?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1423.558700014837,
+   "tin": 400,
+   "tout": 18
+  },
+  {
+   "ticket": "La sincronización con Google Calendar duplica los eventos.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 950.2681000158191,
+   "tin": 396,
+   "tout": 19
+  },
+  {
+   "ticket": "¿Dónde puedo descargar vuestro logo para una presentación?",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1060.7468999223784,
+   "tin": 394,
+   "tout": 18
+  },
+  {
+   "ticket": "La tarjeta que tenía registrada ha caducado, ¿cómo pongo una nueva?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1171.8494000378996,
+   "tin": 401,
+   "tout": 19
+  },
+  {
+   "ticket": "Estamos migrando 50.000 registros y la importación falla al 80 % siempre. Salimos a producción mañana.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 2166.144600021653,
+   "tin": 409,
+   "tout": 19
+  },
+  {
+   "ticket": "Contraté el plan Pro por error, quería el Básico. ¿Me devolvéis la diferencia?",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 975.7000000681728,
+   "tin": 404,
+   "tout": 19
+  },
+  {
+   "ticket": "¿Tenéis programa de partners o de reseller?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1037.7243999391794,
+   "tin": 395,
+   "tout": 18
+  },
+  {
+   "ticket": "La app móvil se cierra sola al abrir la pestaña de informes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1380.5117999436334,
+   "tin": 398,
+   "tout": 19
+  },
+  {
+   "ticket": "¿Estáis contratando? Me gustaría enviar mi currículum.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1699.8001000611112,
+   "tin": 399,
+   "tout": 92
+  },
+  {
+   "ticket": "El servicio estuvo caído 2 días la semana pasada; quiero que me compenséis devolviéndome esos días.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 2916.4924999931827,
+   "tin": 407,
+   "tout": 106
+  },
+  {
+   "ticket": "Los correos de notificación llegan a spam a todos nuestros clientes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1024.4473000057042,
+   "tin": 397,
+   "tout": 19
+  },
+  {
+   "ticket": "Queremos ampliar de 10 a 40 licencias, ¿con quién hablo?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1098.0092999525368,
+   "tin": 401,
+   "tout": 18
+  },
+  {
+   "ticket": "No me ha llegado la factura de este mes al correo.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 866.6311000706628,
+   "tin": 397,
+   "tout": 19
+  },
+  {
+   "ticket": "Los pagos de nuestros clientes se están rechazando todos en el checkout desde hace una hora.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1635.0169000215828,
+   "tin": 403,
+   "tout": 114
+  },
+  {
+   "ticket": "Me gustaría proponer una colaboración para un artículo en nuestro blog.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1518.6564999166876,
+   "tin": 397,
+   "tout": 87
+  },
+  {
+   "ticket": "Cancelé la suscripción hace dos meses y me seguís cobrando. Quiero que me devolváis esos cargos.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1591.0345000447705,
+   "tin": 407,
+   "tout": 91
+  },
+  {
+   "ticket": "El panel tarda unos 10 segundos en cargar, antes era instantáneo.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1108.611400006339,
+   "tin": 400,
+   "tout": 19
+  },
+  {
+   "ticket": "¿Hacéis descuento para startups en su primer año?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2176.7849000170827,
+   "tin": 396,
+   "tout": 18
+  },
+  {
+   "ticket": "Hemos detectado accesos desde IPs desconocidas a cuentas de administrador. ¿Estáis sufriendo un ataque?",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1668.044300051406,
+   "tin": 404,
+   "tout": 57
+  },
+  {
+   "ticket": "Quiero cambiar la forma de pago de tarjeta a transferencia bancaria.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2080.3421000018716,
+   "tin": 397,
+   "tout": 66
+  },
+  {
+   "ticket": "¿Qué tal el fin de semana? Era broma, perdonad, me equivoqué de chat.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1138.2165000541136,
+   "tin": 407,
+   "tout": 18
+  },
+  {
+   "ticket": "La integración con Salesforce ha dejado de sincronizar contactos desde la última actualización.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2798.4295999631286,
+   "tin": 400,
+   "tout": 95
+  },
+  {
+   "ticket": "Queremos un presupuesto formal para presentarlo a dirección antes del viernes.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1077.134900027886,
+   "tin": 398,
+   "tout": 18
+  },
+  {
+   "ticket": "Me cobrasteis el IVA dos veces en la última factura, reclamo la devolución del importe.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 2022.3537000129,
+   "tin": 404,
+   "tout": 125
+  }
+ ],
+ "MiniMax-M3": [
+  {
+   "ticket": "Me habéis cobrado dos veces la suscripción de septiembre. Quiero que me devolváis el cargo duplicado.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 5130.944899981841,
+   "tin": 377,
+   "tout": 156
+  },
+  {
+   "ticket": "La API devuelve error 500 desde esta mañana y tenemos la tienda caída. ¡Ayuda!",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1458.2799999043345,
+   "tin": 376,
+   "tout": 95
+  },
+  {
+   "ticket": "¿Tenéis descuento para ONGs?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2666.0687000257894,
+   "tin": 365,
+   "tout": 61
+  },
+  {
+   "ticket": "El webhook de Stripe no llega a nuestro endpoint desde que cambiamos de dominio.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1701.5034999931231,
+   "tin": 373,
+   "tout": 153
+  },
+  {
+   "ticket": "Quiero darme de baja y que me devolváis lo que queda del año.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 2802.7340000262484,
+   "tin": 373,
+   "tout": 167
+  },
+  {
+   "ticket": "¿Cómo cambio la dirección de facturación en la factura?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 2651.3110999949276,
+   "tin": 367,
+   "tout": 99
+  },
+  {
+   "ticket": "Hola, solo quería daros las gracias por la ayuda de ayer :)",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1440.8763000974432,
+   "tin": 371,
+   "tout": 72
+  },
+  {
+   "ticket": "No puedo iniciar sesión, me dice que la contraseña es incorrecta aunque la he restablecido.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 5301.660900004208,
+   "tin": 376,
+   "tout": 130
+  },
+  {
+   "ticket": "Toda la plataforma está caída para nuestros 3.000 usuarios, estamos perdiendo ventas cada minuto.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 960.2944999933243,
+   "tin": 376,
+   "tout": 69
+  },
+  {
+   "ticket": "¿Cuánto cuesta el plan Enterprise para 200 usuarios?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 760.4642999358475,
+   "tin": 367,
+   "tout": 48
+  },
+  {
+   "ticket": "Me habéis subido el precio sin avisar. Exijo que me devolváis la diferencia de este mes.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1171.122599975206,
+   "tin": 378,
+   "tout": 147
+  },
+  {
+   "ticket": "El botón de exportar a PDF no hace nada en Firefox.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2015.1818000013009,
+   "tin": 369,
+   "tout": 112
+  },
+  {
+   "ticket": "Necesito la factura de agosto con el CIF de la empresa, no con mi nombre.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1278.8081000326201,
+   "tin": 375,
+   "tout": 110
+  },
+  {
+   "ticket": "Nos interesa una demo del producto para nuestro equipo de ventas la semana que viene.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 2426.8711000913754,
+   "tin": 373,
+   "tout": 164
+  },
+  {
+   "ticket": "Se ha filtrado la clave de API de producción en un repositorio público, necesito revocarla ya.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 5609.181100036949,
+   "tin": 378,
+   "tout": 153
+  },
+  {
+   "ticket": "Me ha llegado un cargo de 499 € que no reconozco. Devolvedme el dinero o lo denuncio al banco.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 2051.024700049311,
+   "tin": 384,
+   "tout": 184
+  },
+  {
+   "ticket": "¿Ofrecéis precio especial si pagamos anual en lugar de mensual?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1435.4671000037342,
+   "tin": 372,
+   "tout": 74
+  },
+  {
+   "ticket": "La sincronización con Google Calendar duplica los eventos.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1269.1298999125138,
+   "tin": 368,
+   "tout": 91
+  },
+  {
+   "ticket": "¿Dónde puedo descargar vuestro logo para una presentación?",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1739.2022999702021,
+   "tin": 366,
+   "tout": 118
+  },
+  {
+   "ticket": "La tarjeta que tenía registrada ha caducado, ¿cómo pongo una nueva?",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 5508.956400095485,
+   "tin": 373,
+   "tout": 104
+  },
+  {
+   "ticket": "Estamos migrando 50.000 registros y la importación falla al 80 % siempre. Salimos a producción mañana.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1555.6302000768483,
+   "tin": 381,
+   "tout": 118
+  },
+  {
+   "ticket": "Contraté el plan Pro por error, quería el Básico. ¿Me devolvéis la diferencia?",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 3167.4892000155523,
+   "tin": 376,
+   "tout": 133
+  },
+  {
+   "ticket": "¿Tenéis programa de partners o de reseller?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1045.3387000598013,
+   "tin": 367,
+   "tout": 108
+  },
+  {
+   "ticket": "La app móvil se cierra sola al abrir la pestaña de informes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 1416.6686999378726,
+   "tin": 370,
+   "tout": 201
+  },
+  {
+   "ticket": "¿Estáis contratando? Me gustaría enviar mi currículum.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1116.9891000026837,
+   "tin": 371,
+   "tout": 98
+  },
+  {
+   "ticket": "El servicio estuvo caído 2 días la semana pasada; quiero que me compenséis devolviéndome esos días.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 0
+   },
+   "ms": 2198.531899950467,
+   "tin": 379,
+   "tout": 461
+  },
+  {
+   "ticket": "Los correos de notificación llegan a spam a todos nuestros clientes.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1293.0173999629915,
+   "tin": 369,
+   "tout": 238
+  },
+  {
+   "ticket": "Queremos ampliar de 10 a 40 licencias, ¿con quién hablo?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 13484.194300021045,
+   "tin": 373,
+   "tout": 106
+  },
+  {
+   "ticket": "No me ha llegado la factura de este mes al correo.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1497.665400034748,
+   "tin": 369,
+   "tout": 77
+  },
+  {
+   "ticket": "Los pagos de nuestros clientes se están rechazando todos en el checkout desde hace una hora.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1993.929999996908,
+   "tin": 375,
+   "tout": 154
+  },
+  {
+   "ticket": "Me gustaría proponer una colaboración para un artículo en nuestro blog.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1366.4421999128535,
+   "tin": 369,
+   "tout": 178
+  },
+  {
+   "ticket": "Cancelé la suscripción hace dos meses y me seguís cobrando. Quiero que me devolváis esos cargos.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 1217.1764000086114,
+   "tin": 379,
+   "tout": 164
+  },
+  {
+   "ticket": "El panel tarda unos 10 segundos en cargar, antes era instantáneo.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 4728.290900005959,
+   "tin": 372,
+   "tout": 230
+  },
+  {
+   "ticket": "¿Hacéis descuento para startups en su primer año?",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1820.7062999717891,
+   "tin": 368,
+   "tout": 49
+  },
+  {
+   "ticket": "Hemos detectado accesos desde IPs desconocidas a cuentas de administrador. ¿Estáis sufriendo un ataque?",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 2,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 2
+   },
+   "ms": 1778.9917000336573,
+   "tin": 376,
+   "tout": 105
+  },
+  {
+   "ticket": "Quiero cambiar la forma de pago de tarjeta a transferencia bancaria.",
+   "equipo": "facturacion",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1318.7614999478683,
+   "tin": 369,
+   "tout": 72
+  },
+  {
+   "ticket": "¿Qué tal el fin de semana? Era broma, perdonad, me equivoqué de chat.",
+   "equipo": "otro",
+   "reembolso": false,
+   "urgencia": 0,
+   "pred": {
+    "equipo": "otro",
+    "reembolso": false,
+    "urgencia": 0
+   },
+   "ms": 1076.8990000942722,
+   "tin": 379,
+   "tout": 121
+  },
+  {
+   "ticket": "La integración con Salesforce ha dejado de sincronizar contactos desde la última actualización.",
+   "equipo": "tecnico",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "tecnico",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 3528.617199975997,
+   "tin": 372,
+   "tout": 141
+  },
+  {
+   "ticket": "Queremos un presupuesto formal para presentarlo a dirección antes del viernes.",
+   "equipo": "comercial",
+   "reembolso": false,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "comercial",
+    "reembolso": false,
+    "urgencia": 1
+   },
+   "ms": 3699.3475999915972,
+   "tin": 370,
+   "tout": 99
+  },
+  {
+   "ticket": "Me cobrasteis el IVA dos veces en la última factura, reclamo la devolución del importe.",
+   "equipo": "facturacion",
+   "reembolso": true,
+   "urgencia": 1,
+   "pred": {
+    "equipo": "facturacion",
+    "reembolso": true,
+    "urgencia": 1
+   },
+   "ms": 2225.258499966003,
+   "tin": 376,
+   "tout": 162
+  }
+ ]
+}
