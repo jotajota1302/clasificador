@@ -126,7 +126,8 @@ y hace de proxy a OpenRouter, así la clave no llega al navegador. Todo es en vi
   el LLM grande redacta el borrador (si no, va a una persona). Cada paso muestra su
   tiempo y cada carril sus ms, tokens y coste por 1.000 tickets. Con un ticket del
   dataset se marca qué coincide con la etiqueta manual.
-- **La carrera**: los 40 tickets etiquetados, LLM, Jev y el flujo combinado a la vez,
+- **La carrera**: 10, 20 (por defecto) o 40 tickets etiquetados, repartidos por todo el
+  dataset para mantener la mezcla de equipos y urgencias; LLM, Jev y el flujo combinado a la vez,
   con acierto, ms y coste en directo, y un deslizador que muestra cuánto se automatiza
   con cada umbral. En el combinado, Jev decide y, si la confianza supera el umbral, el
   LLM grande redacta la respuesta en segundo plano (3 a la vez, para no agotar las 6

@@ -55,6 +55,7 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .cabecera h1 .c-mix { color: var(--mix); }
 .cabecera p { color: var(--suave); max-width: 60ch; margin: 14px 0 0; }
 
+.cabecera > * { min-width: 0; }
 .mesa { background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; padding: 18px; }
 .mesa label { font-weight: 700; display: block; margin-bottom: 6px; }
 .mesa textarea {
@@ -68,6 +69,8 @@ button, select, textarea, input { font: inherit; color: inherit; }
 }
 .ejemplos button:hover { border-color: var(--tinta); }
 .controles { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+.carrera-acciones { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.carrera-acciones select { border: 1px solid var(--linea); border-radius: 8px; padding: 8px 10px; background: var(--papel); }
 .controles .campo { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--suave); }
 .controles select { border: 1px solid var(--linea); border-radius: 8px; padding: 6px 8px; background: var(--papel); }
 .controles input[type=range] { accent-color: var(--mix); width: 120px; }
@@ -137,10 +140,12 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .veredicto.si { color: var(--ok); } .veredicto.no { color: var(--duda); }
 
 .cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--linea); }
-.cifra { padding: 12px 10px 14px; text-align: center; }
+.cifra { padding: 12px 6px 14px; text-align: center; min-width: 0; }
 .cifra + .cifra { border-left: 1px solid var(--linea); }
-.cifra b { display: block; font-family: var(--display); font-size: 24px; font-weight: 700; color: var(--c); line-height: 1.1; }
+.cifra b { display: block; font-family: var(--display); font-size: clamp(18px, 1.7vw, 24px); white-space: nowrap; font-weight: 700; color: var(--c); line-height: 1.1; }
 .cifra span { font-size: 12px; color: var(--suave); }
+.desglose { margin: 0; padding: 0 14px 14px; font-size: 13px; color: var(--suave); text-align: center; min-height: 2.9em; }
+.desglose b { color: var(--tinta); }
 
 /* ---------- Carrera ---------- */
 .carrera { padding: 8px 0 56px; }
@@ -148,13 +153,13 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .carrera h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -0.01em; }
 .carrera-cab p { margin: 6px 0 0; color: var(--suave); max-width: 70ch; }
 .pistas { display: grid; gap: 14px; }
-.pista-carrera { background: var(--papel); border-radius: 14px; padding: 16px 18px; display: grid; grid-template-columns: 170px minmax(0, 1fr) auto; gap: 16px; align-items: center; border-left: 6px solid var(--c); }
+.pista-carrera { background: var(--papel); border-radius: 14px; padding: 16px 18px; display: grid; grid-template-columns: 170px minmax(0, 1fr) 452px; gap: 16px; align-items: center; border-left: 6px solid var(--c); }
 .pista-carrera[data-c=llm] { --c: var(--llm); --c-claro: var(--llm-claro); }
 .pista-carrera[data-c=jev] { --c: var(--jev); --c-claro: var(--jev-claro); }
 .pista-carrera[data-c=mix] { --c: var(--mix); --c-claro: var(--mix-claro); }
 .pista-carrera h3 { font-size: 22px; color: var(--c); }
 .pista-carrera .modelo { font-size: 13px; color: var(--suave); overflow-wrap: anywhere; }
-.celdas { display: grid; grid-template-columns: repeat(40, minmax(0, 1fr)); gap: 3px; }
+.celdas { display: grid; grid-template-columns: repeat(var(--n, 20), minmax(0, 26px)); gap: 3px; }
 .celda { aspect-ratio: 1 / 1.6; border-radius: 3px; background: var(--fondo); border: 1px solid var(--linea); }
 .celda.en-curso { background: var(--c-claro); border-color: var(--c); }
 .celda.bien { background: var(--c); border-color: var(--c); }
@@ -162,8 +167,9 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .celda.mal { background: var(--mal); border-color: var(--mal); opacity: .8; }
 .celda.humano { background: var(--linea); border-color: var(--suave); border-style: dashed; }
 .celda.redactando { background: var(--c-claro); border-color: var(--c); border-width: 2px; animation: latido 1s ease-in-out infinite; }
-.marcador { display: grid; grid-template-columns: repeat(4, auto); gap: 18px; text-align: right; }
-.marcador b { display: block; font-family: var(--display); font-size: 26px; color: var(--c); line-height: 1.1; }
+.marcador { display: grid; grid-template-columns: 64px 92px 112px 136px; gap: 16px; text-align: right; }
+.marcador > div { min-width: 0; }
+.marcador b { display: block; font-family: var(--display); font-size: 26px; color: var(--c); line-height: 1.1; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .marcador span { font-size: 12px; color: var(--suave); }
 .leyenda { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--suave); margin-top: 12px; }
 .leyenda i { display: inline-block; width: 12px; height: 16px; border-radius: 3px; vertical-align: -3px; margin-right: 5px; border: 1px solid var(--suave); }
@@ -190,7 +196,7 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .metrica { margin-bottom: 12px; }
 .metrica .nombre { font-size: 14px; color: var(--suave); display: flex; justify-content: space-between; gap: 8px; }
 .par { display: grid; gap: 3px; margin-top: 4px; }
-.par .linea { display: grid; grid-template-columns: 74px minmax(0, 1fr) 76px; gap: 6px; align-items: center; font-size: 13px; }
+.par .linea { display: grid; grid-template-columns: 96px minmax(0, 1fr) 76px; gap: 6px; align-items: center; font-size: 13px; }
 .par .linea span:last-child { text-align: right; }
 .par .linea.gana span:last-child { font-weight: 700; color: var(--tinta); }
 .par .pista { height: 9px; background: var(--fondo); border-radius: 5px; overflow: hidden; }
@@ -214,7 +220,7 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .reparto-carriles { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linea); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
 .reparto-carriles h4 { font-family: var(--display); font-size: 22px; margin: 0; }
 .reparto-carriles .ayuda { color: var(--suave); font-size: 15px; margin: 4px 0 14px; }
-.fila-100 { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 10px; align-items: center; margin-bottom: 10px; }
+.fila-100 { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center; margin-bottom: 10px; }
 .fila-100 > span { font-family: var(--display); font-weight: 700; font-size: 16px; }
 .fila-100[data-c=llm] > span { color: var(--llm); } .fila-100[data-c=jev] > span { color: var(--jev); } .fila-100[data-c=mix] > span { color: var(--mix); }
 .barra-100 { display: flex; height: 38px; border-radius: 8px; overflow: hidden; gap: 2px; background: var(--papel); }
@@ -228,22 +234,58 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .q-bien { background: var(--ok); color: #fff; } .q-parcial { background: #D9A21B; color: #1B2333; }
 .q-mal { background: var(--mal); color: #fff; } .q-humano { background: var(--suave); color: #fff; }
 @media (max-width: 900px) { .reparto-carriles { grid-template-columns: 1fr; } }
-@media (max-width: 1100px) { .resumen-cuerpo { grid-template-columns: 1fr; } }
-@media (max-width: 560px) { .resumen-cuerpo { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .resumen-cuerpo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .resumen-cuerpo { grid-template-columns: 1fr; } }
 .aviso { background: var(--mal); color: #fff; border-radius: 10px; padding: 10px 14px; margin: 10px 0; display: none; }
 .aviso.visible { display: block; }
 footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
 
 @media (max-width: 1100px) {
-  .cabecera { grid-template-columns: 1fr; gap: 20px; }
-  .carriles { grid-template-columns: 1fr; }
-  .pista-carrera { grid-template-columns: 1fr; }
-  .marcador { text-align: left; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cabecera { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .carriles { gap: 12px; }
+  .carril header, .paso { padding-left: 14px; padding-right: 14px; }
   .automatizar { grid-template-columns: 1fr; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .pista-carrera { grid-template-columns: 140px minmax(0, 1fr) 392px; gap: 12px; }
+  .marcador { grid-template-columns: 56px 80px 100px 116px; gap: 12px; }
+  .marcador b { font-size: 22px; }
+  .cifra span { font-size: 11px; line-height: 1.25; display: block; }
+  .desglose { min-height: 4.6em; }
+}
+@media (max-width: 900px) {
+  .carriles { grid-template-columns: 1fr; }
+  .pista-carrera { grid-template-columns: 1fr; gap: 12px; }
+  .marcador { text-align: left; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cifra b { font-size: 24px; }
+  .desglose { min-height: 0; }
 }
 @media (max-width: 560px) {
   .envoltorio { padding: 0 16px; }
-  .celdas { grid-template-columns: repeat(20, minmax(0, 1fr)); }
+  body { font-size: 16px; }
+  .cabecera { padding-top: 24px; }
+  .mesa { padding: 14px; }
+  .mesa textarea { min-height: 112px; font-size: 17px; }
+  /* Los tickets de ejemplo, en una fila que se desliza en vez de ocho líneas apiladas */
+  .ejemplos { flex-wrap: nowrap; overflow-x: auto; margin-left: -14px; margin-right: -14px; padding: 2px 14px 6px; scroll-snap-type: x proximity; }
+  .ejemplos { scrollbar-width: none; }
+  .ejemplos::-webkit-scrollbar { display: none; }
+  .ejemplos button { flex: none; max-width: 220px; scroll-snap-align: start; }
+  .controles .campo { width: 100%; justify-content: space-between; }
+  .controles input[type=range] { flex: 1; }
+  .carrera-acciones { width: 100%; }
+  .carrera-acciones select { flex: 1; }
+  .pista-carrera { padding: 14px; }
+  .marcador { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+  .marcador b { font-size: 22px; }
+  .resumen { padding: 16px; }
+  .fila-100 { grid-template-columns: 1fr; gap: 4px; margin-bottom: 12px; }
+  .fila-100 > span { font-size: 14px; }
+  .barra-100 { height: 32px; }
+  .conclusiones li { font-size: 16px; }
+  .automatizar { padding: 14px; }
+  .reparto div { font-size: 13px; }
+  .celdas { grid-template-columns: repeat(min(var(--n, 20), 20), minmax(0, 26px)); }
   .cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cifra:nth-child(3) { border-left: 0; }
   .cifra:nth-child(n+3) { border-top: 1px solid var(--linea); }
@@ -295,11 +337,12 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
           <div class="detalle" id="llm-res"></div></li>
       </ol>
       <div class="cifras">
+        <div class="cifra"><b id="llm-dec">–</b><span>ms hasta decidir</span></div>
         <div class="cifra"><b id="llm-ms">–</b><span>ms totales</span></div>
-        <div class="cifra"><b id="llm-ttft">–</b><span>ms al primer token</span></div>
-        <div class="cifra"><b id="llm-tok">–</b><span>tokens generados</span></div>
+        <div class="cifra"><b id="llm-n">–</b><span>llamadas</span></div>
         <div class="cifra"><b id="llm-coste">–</b><span>por 1.000 tickets</span></div>
       </div>
+      <p class="desglose" id="llm-desglose">Solo clasifica: no redacta respuesta.</p>
     </article>
 
     <article class="carril" data-c="jev">
@@ -317,17 +360,18 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
           <div class="detalle" id="jev-res"></div></li>
       </ol>
       <div class="cifras">
+        <div class="cifra"><b id="jev-dec">–</b><span>ms hasta decidir</span></div>
         <div class="cifra"><b id="jev-ms">–</b><span>ms totales</span></div>
         <div class="cifra"><b id="jev-n">–</b><span>llamadas</span></div>
-        <div class="cifra"><b id="jev-tok">–</b><span>tokens de entrada</span></div>
         <div class="cifra"><b id="jev-coste">–</b><span>por 1.000 tickets</span></div>
       </div>
+      <p class="desglose" id="jev-desglose">Solo clasifica: no redacta respuesta.</p>
     </article>
 
     <article class="carril" data-c="mix">
       <header>
         <h2>Combinado</h2>
-        <div class="que">Jev decide; el LLM solo escribe cuando la decisión está clara.</div>
+        <div class="que"><strong>Decide y además redacta la respuesta al cliente.</strong> Jev decide; el LLM solo escribe cuando la decisión está clara.</div>
         <div class="modelo" id="m-mix"></div>
       </header>
       <ol class="pasos">
@@ -339,28 +383,37 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
           <div class="detalle"><div class="salida-llm" id="mix-texto"></div></div></li>
       </ol>
       <div class="cifras">
+        <div class="cifra"><b id="mix-dec">–</b><span>ms hasta decidir</span></div>
         <div class="cifra"><b id="mix-ms">–</b><span>ms totales</span></div>
-        <div class="cifra"><b id="mix-dec">–</b><span>ms en decidir</span></div>
         <div class="cifra"><b id="mix-n">–</b><span>llamadas</span></div>
         <div class="cifra"><b id="mix-coste">–</b><span>por 1.000 tickets</span></div>
       </div>
+      <p class="desglose" id="mix-desglose">Clasifica y, si lo tiene claro, redacta la respuesta.</p>
     </article>
   </section>
 
   <section class="carrera" id="carrera">
     <div class="carrera-cab">
       <div>
-        <h2>Los 40 tickets etiquetados, a la vez</h2>
+        <h2>Los <span class="n-tickets">20</span> tickets etiquetados, a la vez</h2>
         <p>Cada carril procesa los tickets uno detrás de otro, como haría un sistema de soporte. Cada casilla es un ticket comparado con su etiqueta manual. El combinado decide con Jev y, si está claro, el LLM redacta la respuesta en segundo plano; si no, el ticket va a una persona.</p>
       </div>
-      <button class="boton" id="correr" type="button">Lanzar la carrera</button>
+      <div class="carrera-acciones">
+        <label for="n-carrera">Tickets</label>
+        <select id="n-carrera">
+          <option value="10">10 (unos 15 s)</option>
+          <option value="20" selected>20 (unos 30 s)</option>
+          <option value="40">40 (unos 60 s)</option>
+        </select>
+        <button class="boton" id="correr" type="button">Lanzar la carrera</button>
+      </div>
     </div>
     <div class="pistas">
       <div class="pista-carrera" data-c="llm">
         <div><h3>LLM</h3><div class="modelo" id="c-m-llm"></div></div>
         <div class="celdas" id="celdas-llm"></div>
         <div class="marcador">
-          <div><b id="c-llm-hechos">0</b><span>de 40</span></div>
+          <div><b id="c-llm-hechos">0</b><span>de <span class="n-tickets">20</span></span></div>
           <div><b id="c-llm-acierto">–</b><span>las 3 bien</span></div>
           <div><b id="c-llm-ms">–</b><span>ms por ticket</span></div>
           <div><b id="c-llm-coste">–</b><span>coste total</span></div>
@@ -370,19 +423,19 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
         <div><h3>Jev</h3><div class="modelo" id="c-m-jev"></div></div>
         <div class="celdas" id="celdas-jev"></div>
         <div class="marcador">
-          <div><b id="c-jev-hechos">0</b><span>de 40</span></div>
+          <div><b id="c-jev-hechos">0</b><span>de <span class="n-tickets">20</span></span></div>
           <div><b id="c-jev-acierto">–</b><span>las 3 bien</span></div>
           <div><b id="c-jev-ms">–</b><span>ms por ticket</span></div>
           <div><b id="c-jev-coste">–</b><span>coste total</span></div>
         </div>
       </div>
       <div class="pista-carrera" data-c="mix">
-        <div><h3>Combinado</h3><div class="modelo" id="c-m-mix"></div></div>
+        <div><h3>Combinado</h3><div class="modelo"><strong>Incluye redactar la respuesta</strong></div><div class="modelo" id="c-m-mix"></div></div>
         <div class="celdas" id="celdas-mix"></div>
         <div class="marcador">
-          <div><b id="c-mix-hechos">0</b><span>de 40</span></div>
-          <div><b id="c-mix-auto">–</b><span>automatizado</span></div>
-          <div><b id="c-mix-acierto">–</b><span>bien en lo automático</span></div>
+          <div><b id="c-mix-hechos">0</b><span>de <span class="n-tickets">20</span></span></div>
+          <div><b id="c-mix-acierto">–</b><span>las 3 bien</span></div>
+          <div><b id="c-mix-ms">–</b><span>ms por ticket</span></div>
           <div><b id="c-mix-coste">–</b><span>coste total</span></div>
         </div>
       </div>
@@ -557,13 +610,13 @@ async function carrilLLM(ticket) {
   delete salida.dataset.texto;
   salida.classList.remove("escribiendo");
   marcarPaso("llm-gen", "hecho", fin.ms);
-  $("#llm-ttft").textContent = fmtMs(fin.ms_primer_token);
-  $("#llm-tok").textContent = fin.tokens_salida + (fin.tokens_razonamiento ? ` (${fin.tokens_razonamiento} pensando)` : "");
+  $("#llm-n").textContent = "1";
   $("#llm-coste").textContent = fmtMil(fin.coste);
 
   const pred = parsearLLM(fin.texto);
   const total = performance.now() - t0;
   $("#llm-ms").textContent = fmtMs(total);
+  $("#llm-dec").textContent = fmtMs(total);
   if (!pred) {
     marcarPaso("llm-parse", "error", 0);
     $("#llm-parse-d").textContent = "El texto no es un JSON válido: este ticket se queda sin clasificar.";
@@ -616,8 +669,8 @@ async function carrilJev(promesaJev) {
   marcarPaso("jev-res", "hecho");
   const pred = pintarJev(d, $("#jev-res"));
   $("#jev-ms").textContent = fmtMs(d.ms);
+  $("#jev-dec").textContent = fmtMs(d.ms);
   $("#jev-n").textContent = "1";
-  $("#jev-tok").textContent = u.input_tokens ?? "–";
   $("#jev-coste").textContent = fmtMil(u.cost);
   return pred;
 }
@@ -653,6 +706,7 @@ async function carrilMix(ticket, promesaJev) {
     $("#mix-ms").textContent = fmtMs(performance.now() - t0);
     $("#mix-n").textContent = "1";
     $("#mix-coste").textContent = fmtMil(costeJev);
+    $("#mix-desglose").innerHTML = `Decidir con Jev: <b>${fmtMil(costeJev)}</b>. No redacta: el ticket va a una persona.`;
     return;
   }
   marcarPaso("mix-borrador", "activo");
@@ -670,6 +724,7 @@ async function carrilMix(ticket, promesaJev) {
   $("#mix-ms").textContent = fmtMs(performance.now() - t0);
   $("#mix-n").textContent = "2";
   $("#mix-coste").textContent = fmtMil(costeJev + fin.coste);
+  $("#mix-desglose").innerHTML = `Decidir con Jev: <b>${fmtMil(costeJev)}</b>. Redactar la respuesta con ${CFG.llm_borrador}: <b>${fmtMil(fin.coste)}</b>.`;
 }
 
 /* ---------- Orquestación de un ticket ---------- */
@@ -682,6 +737,7 @@ function reiniciarCarriles() {
   $("#jev-dec-d").innerHTML = "Una sola llamada a <code>/v1/systemone</code>. Sin texto que parsear.";
   $("#mix-jev-d").textContent = "La misma decisión del carril de Jev.";
   $("#mix-gate-d").textContent = "Se compara la confianza con el umbral elegido.";
+  $("#mix-desglose").textContent = "Clasifica y, si lo tiene claro, redacta la respuesta.";
 }
 
 $("#mesa").addEventListener("submit", async (e) => {
@@ -785,8 +841,10 @@ async function correrMix(tickets, umbral) {
   const marcador = () => {
     const hechos = st.auto + st.humano;
     $("#c-mix-hechos").textContent = hechos;
-    $("#c-mix-auto").textContent = pct(st.auto / hechos);
     $("#c-mix-acierto").textContent = st.auto ? pct(st.tres / st.auto) : "–";
+    $("#c-mix-acierto").title = `Sobre los ${st.auto} tickets que resuelve solo; ${st.humano} enviados a una persona.`;
+    $("#c-mix-ms").textContent = st.ms.length ? fmtMs(media(st.ms)) : "–";
+    $("#c-mix-ms").title = "Tiempo medio hasta decidir; la respuesta se redacta en segundo plano.";
     $("#c-mix-coste").textContent = fmtCoste(st.coste);
     $("#c-mix-coste").title = `Decidir con Jev: ${fmtCoste(st.costeDecidir)}. Redactar ${st.borradores} respuestas: ${fmtCoste(st.costeRedactar)}.`;
   };
@@ -843,7 +901,7 @@ const p95 = (xs) => { const o = [...xs].sort((a, b) => a - b); return o[Math.min
 const media = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
 const veces = (x) => x.toLocaleString("es-ES", { maximumFractionDigits: 1 });
 const fmtDolar = (usd) => "$" + usd.toFixed(usd < 0.1 ? 3 : 2);
-const NOMBRES = { llm: "LLM", jev: "Jev", mix: "Combinado" };
+const NOMBRES = { llm: "LLM", jev: "Jev", mix: "Combinado + respuesta" };
 
 // series: [["llm", valor], ["jev", valor], ["mix", valor]]; un valor null no se pinta.
 // tipo decide cómo se lee la diferencia: "pct" (puntos), "tiempo" (veces más rápido), "coste" (veces más barato),
@@ -982,7 +1040,7 @@ function pintarConclusiones(L, J, M) {
   const jevMejor = msJ < msL && cJ <= cL && aJ >= aL;
   const mixMejor = M.auto && errM < errL;
   $("#veredicto-final").textContent = jevMejor
-    ? `Para decidir, Jev es más rápido, más barato y acierta más. ${mixMejor ? "Lo mejor es combinarlos: Jev decide, el LLM solo escribe cuando la decisión está clara y lo dudoso va a una persona." : "El LLM queda para lo que hace bien: escribir."}`
+    ? `Para decidir, Jev es más rápido, más barato y ${aJ > aL ? "acierta más" : "acierta lo mismo"}. ${mixMejor ? "Lo mejor es combinarlos: Jev decide, el LLM solo escribe cuando la decisión está clara y lo dudoso va a una persona." : "El LLM queda para lo que hace bien: escribir."}`
     : `En esta ejecución Jev no gana en todo: ${[msJ >= msL ? "velocidad" : "", cJ > cL ? "coste" : "", aJ < aL ? "acierto" : ""].filter(Boolean).join(", ")} a favor del LLM. Conviene repetir la carrera antes de sacar conclusiones.`;
 }
 
@@ -1002,6 +1060,23 @@ function pintarReparto() {
 }
 $("#umbral-c").addEventListener("input", pintarReparto);
 
+function ticketsCarrera() {
+  const n = Math.min(Number($("#n-carrera").value), CFG.tickets.length);
+  const paso = CFG.tickets.length / n;
+  return Array.from({ length: n }, (_, i) => CFG.tickets[Math.floor(i * paso)]);
+}
+
+function prepararCasillas(n) {
+  document.querySelectorAll(".n-tickets").forEach((el) => (el.textContent = n));
+  for (const tipo of ["llm", "jev", "mix"]) {
+    const cont = $(`#celdas-${tipo}`);
+    cont.style.setProperty("--n", n);
+    cont.innerHTML = "";
+    for (let i = 0; i < n; i++) nuevaCelda(cont);
+  }
+}
+$("#n-carrera").addEventListener("change", () => { if (!$("#correr").disabled) prepararCasillas(ticketsCarrera().length); });
+
 $("#correr").addEventListener("click", async () => {
   const boton = $("#correr");
   boton.disabled = true; boton.textContent = "En carrera…";
@@ -1009,24 +1084,23 @@ $("#correr").addEventListener("click", async () => {
   $("#c-m-llm").textContent = modelo;
   const umbral = Number($("#umbral-c").value);
   $("#c-m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}, confianza ≥ ${umbral.toFixed(2)}`;
-  for (const tipo of ["llm", "jev", "mix"]) {
-    const cont = $(`#celdas-${tipo}`);
-    cont.innerHTML = "";
-    CFG.tickets.forEach(() => nuevaCelda(cont));
-  }
+  const tickets = ticketsCarrera();
+  prepararCasillas(tickets.length);
+  $("#n-carrera").disabled = true;
   ["llm", "jev"].forEach((tipo) => ["hechos", "acierto", "ms", "coste"].forEach((k) => ($(`#c-${tipo}-${k}`).textContent = k === "hechos" ? "0" : "–")));
-  ["hechos", "auto", "acierto", "coste"].forEach((k) => ($(`#c-mix-${k}`).textContent = k === "hechos" ? "0" : "–"));
+  ["hechos", "acierto", "ms", "coste"].forEach((k) => ($(`#c-mix-${k}`).textContent = k === "hechos" ? "0" : "–"));
   filasJev.length = 0;
   $("#resumen").classList.remove("visible");
   try {
     const [stLLM, stJev, stMix] = await Promise.all([
-      correrCarril("llm", CFG.tickets, modelo), correrCarril("jev", CFG.tickets), correrMix(CFG.tickets, umbral)]);
+      correrCarril("llm", tickets, modelo), correrCarril("jev", tickets), correrMix(tickets, umbral)]);
     pintarResumen(stLLM, stJev, stMix);
   } catch (err) {
     console.error(err);
     avisar("No se pudo completar el resumen de la carrera: " + err.message);
   } finally {
     boton.disabled = false; boton.textContent = "Repetir la carrera";
+    $("#n-carrera").disabled = false;
   }
 });
 
@@ -1045,7 +1119,7 @@ $("#correr").addEventListener("click", async () => {
   $("#c-m-llm").textContent = CFG.llms[0];
   $("#c-m-jev").textContent = CFG.jev;
   $("#c-m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}`;
-  ["llm", "jev", "mix"].forEach((t) => CFG.tickets.forEach(() => nuevaCelda($(`#celdas-${t}`))));
+  prepararCasillas(ticketsCarrera().length);
   $("#pie").textContent = `Todo en vivo contra OpenRouter. Decisiones: ${CFG.jev}. Generación: ${CFG.llms.join(" y ")}.`;
 
   const elegidos = [0, 1, 2, 5, 9, 14, 22, 31].filter((i) => i < CFG.tickets.length).map((i) => CFG.tickets[i]);
