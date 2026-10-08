@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triaje: LLM vs Jev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --fondo: #EEF1F5;
+  --papel: #FFFFFF;
+  --tinta: #1B2333;
+  --suave: #5A6478;
+  --linea: #D3D9E3;
+  --llm: #B86E00;
+  --llm-claro: #FFF0D4;
+  --jev: #0B7A75;
+  --jev-claro: #D5EFEC;
+  --mix: #5B45B0;
+  --mix-claro: #E6E0F7;
+  --ok: #2E7D32;
+  --mal: #C62828;
+  --duda: #8A6D00;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --texto: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fondo: #141922; --papel: #1D2430; --tinta: #E8ECF3; --suave: #9AA4B6; --linea: #313B4C;
+    --llm: #F2A43A; --llm-claro: #3A2C14; --jev: #3CC7BF; --jev-claro: #123634;
+    --mix: #A58FF0; --mix-claro: #2B2448; --ok: #6CC070; --mal: #FF7B7B; --duda: #E3C451;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--fondo); color: var(--tinta);
+  font: 17px/1.5 var(--texto); font-variant-numeric: tabular-nums;
+}
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; margin: 0; }
+button, select, textarea, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--mix); outline-offset: 2px; }
+.envoltorio { max-width: 1440px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Cabecera + mesa del ticket ---------- */
+.cabecera { padding: 36px 0 20px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 40px; align-items: end; }
+.cabecera h1 { font-size: clamp(34px, 4.4vw, 60px); font-weight: 800; letter-spacing: -0.02em; }
+.cabecera h1 span { display: block; }
+.cabecera h1 .c-llm { color: var(--llm); }
+.cabecera h1 .c-jev { color: var(--jev); }
+.cabecera h1 .c-mix { color: var(--mix); }
+.cabecera p { color: var(--suave); max-width: 60ch; margin: 14px 0 0; }
+
+.mesa { background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; padding: 18px; }
+.mesa label { font-weight: 700; display: block; margin-bottom: 6px; }
+.mesa textarea {
+  width: 100%; min-height: 84px; resize: vertical; border: 1px solid var(--linea); border-radius: 10px;
+  padding: 12px 14px; background: var(--fondo); font-size: 19px; line-height: 1.4;
+}
+.ejemplos { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.ejemplos button {
+  border: 1px solid var(--linea); background: transparent; border-radius: 999px; padding: 4px 12px;
+  font-size: 14px; cursor: pointer; max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ejemplos button:hover { border-color: var(--tinta); }
+.controles { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; }
+.controles .campo { display: flex; align-items: center; gap: 8px; font-size: 15px; color: var(--suave); }
+.controles select { border: 1px solid var(--linea); border-radius: 8px; padding: 6px 8px; background: var(--papel); }
+.controles input[type=range] { accent-color: var(--mix); width: 120px; }
+.boton {
+  margin-left: auto; border: 0; border-radius: 10px; padding: 12px 22px; cursor: pointer;
+  background: var(--tinta); color: var(--papel); font-weight: 700; font-size: 17px;
+}
+.boton:disabled { opacity: .5; cursor: progress; }
+.esperado { font-size: 14px; color: var(--suave); margin-top: 10px; min-height: 1.5em; }
+
+/* ---------- Carriles ---------- */
+.carriles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 8px 0 40px; }
+.carril { background: var(--papel); border-radius: 14px; border-top: 6px solid var(--c); display: flex; flex-direction: column; min-width: 0; }
+.carril[data-c=llm] { --c: var(--llm); --c-claro: var(--llm-claro); }
+.carril[data-c=jev] { --c: var(--jev); --c-claro: var(--jev-claro); }
+.carril[data-c=mix] { --c: var(--mix); --c-claro: var(--mix-claro); }
+.carril header { padding: 16px 18px 12px; border-bottom: 1px solid var(--linea); }
+.carril h2 { font-size: 26px; color: var(--c); }
+.carril .que { color: var(--suave); font-size: 15px; margin-top: 4px; }
+.carril .modelo { font-size: 13px; color: var(--suave); margin-top: 6px; overflow-wrap: anywhere; }
+
+.pasos { list-style: none; margin: 0; padding: 6px 0; counter-reset: paso; flex: 1; }
+.paso { counter-increment: paso; display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 4px 10px; padding: 10px 18px; opacity: .38; transition: opacity .25s; }
+.paso::before {
+  content: counter(paso); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+  border: 2px solid var(--c); color: var(--c); font-weight: 700; font-size: 14px; grid-row: span 2;
+}
+.paso.activo, .paso.hecho, .paso.error, .paso.saltado { opacity: 1; }
+.paso.activo::before { background: var(--c-claro); animation: latido 1s ease-in-out infinite; }
+.paso.hecho::before { background: var(--c); color: var(--papel); content: "✓"; }
+.paso.error::before { background: var(--mal); border-color: var(--mal); color: #fff; content: "!"; }
+.paso.saltado { opacity: .45; }
+.paso.saltado .titulo { text-decoration: line-through; }
+.paso .titulo { font-weight: 700; }
+.paso .tiempo { color: var(--suave); font-size: 14px; white-space: nowrap; }
+.paso .detalle { grid-column: 2 / 4; font-size: 15px; color: var(--suave); min-width: 0; }
+@keyframes latido { 50% { transform: scale(1.12); } }
+
+.salida-llm {
+  margin-top: 6px; background: var(--fondo); border-radius: 8px; padding: 8px 10px; min-height: 2.6em;
+  font-size: 14px; color: var(--tinta); white-space: pre-wrap; overflow-wrap: anywhere; max-height: 180px; overflow: auto;
+}
+.salida-llm.escribiendo::after { content: "▍"; color: var(--c); animation: parpadeo .8s steps(1) infinite; }
+@keyframes parpadeo { 50% { opacity: 0; } }
+
+/* Resultados */
+.resultado { display: grid; gap: 10px; margin-top: 6px; color: var(--tinta); }
+.fila-res { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 15px; }
+.fila-res > span:first-child { color: var(--suave); }
+.valor { font-weight: 700; }
+.marca { font-size: 13px; font-weight: 700; margin-left: 6px; }
+.marca.ok { color: var(--ok); } .marca.mal { color: var(--mal); }
+.sin-prob { font-size: 13px; color: var(--suave); font-style: italic; }
+.barras { display: grid; gap: 3px; }
+.barra { display: grid; grid-template-columns: 88px minmax(0, 1fr) 40px; gap: 6px; align-items: center; font-size: 13px; }
+.barra .pista { height: 10px; background: var(--fondo); border-radius: 5px; overflow: hidden; }
+.barra .relleno { height: 100%; width: 0; background: var(--c); border-radius: 5px; transition: width .6s cubic-bezier(.2, .8, .2, 1); }
+.barra.ganadora span:first-child { font-weight: 700; color: var(--tinta); }
+.barra span:last-child { text-align: right; }
+.confianza { font-size: 13px; color: var(--suave); }
+
+.compuerta { display: flex; align-items: center; gap: 10px; margin-top: 6px; font-size: 15px; color: var(--tinta); }
+.compuerta .medidor { position: relative; flex: 1; height: 12px; background: var(--fondo); border-radius: 6px; }
+.compuerta .medidor .nivel { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--c); border-radius: 6px; transition: width .5s; }
+.compuerta .medidor .umbral { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--tinta); border-radius: 2px; }
+.veredicto { font-weight: 700; }
+.veredicto.si { color: var(--ok); } .veredicto.no { color: var(--duda); }
+
+.cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--linea); }
+.cifra { padding: 12px 10px 14px; text-align: center; }
+.cifra + .cifra { border-left: 1px solid var(--linea); }
+.cifra b { display: block; font-family: var(--display); font-size: 24px; font-weight: 700; color: var(--c); line-height: 1.1; }
+.cifra span { font-size: 12px; color: var(--suave); }
+
+/* ---------- Carrera ---------- */
+.carrera { padding: 8px 0 56px; }
+.carrera-cab { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: end; justify-content: space-between; margin-bottom: 16px; }
+.carrera h2 { font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -0.01em; }
+.carrera-cab p { margin: 6px 0 0; color: var(--suave); max-width: 70ch; }
+.pistas { display: grid; gap: 14px; }
+.pista-carrera { background: var(--papel); border-radius: 14px; padding: 16px 18px; display: grid; grid-template-columns: 170px minmax(0, 1fr) auto; gap: 16px; align-items: center; border-left: 6px solid var(--c); }
+.pista-carrera[data-c=llm] { --c: var(--llm); --c-claro: var(--llm-claro); }
+.pista-carrera[data-c=jev] { --c: var(--jev); --c-claro: var(--jev-claro); }
+.pista-carrera h3 { font-size: 22px; color: var(--c); }
+.pista-carrera .modelo { font-size: 13px; color: var(--suave); overflow-wrap: anywhere; }
+.celdas { display: grid; grid-template-columns: repeat(40, minmax(0, 1fr)); gap: 3px; }
+.celda { aspect-ratio: 1 / 1.6; border-radius: 3px; background: var(--fondo); border: 1px solid var(--linea); }
+.celda.en-curso { background: var(--c-claro); border-color: var(--c); }
+.celda.bien { background: var(--c); border-color: var(--c); }
+.celda.parcial { background: var(--c-claro); border-color: var(--c); background-image: linear-gradient(to top, var(--c) 45%, transparent 45%); }
+.celda.mal { background: var(--mal); border-color: var(--mal); opacity: .8; }
+.marcador { display: grid; grid-template-columns: repeat(4, auto); gap: 18px; text-align: right; }
+.marcador b { display: block; font-family: var(--display); font-size: 26px; color: var(--c); line-height: 1.1; }
+.marcador span { font-size: 12px; color: var(--suave); }
+.leyenda { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--suave); margin-top: 12px; }
+.leyenda i { display: inline-block; width: 12px; height: 16px; border-radius: 3px; vertical-align: -3px; margin-right: 5px; border: 1px solid var(--suave); }
+
+.automatizar { margin-top: 18px; background: var(--papel); border-radius: 14px; padding: 18px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 24px; align-items: center; }
+.automatizar h3 { font-size: 22px; }
+.automatizar p { margin: 6px 0 0; color: var(--suave); font-size: 15px; }
+.automatizar .deslizador { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+.automatizar input[type=range] { accent-color: var(--jev); flex: 1; }
+.reparto { display: flex; height: 44px; border-radius: 10px; overflow: hidden; background: var(--fondo); }
+.reparto div { display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 15px; transition: flex-grow .4s; min-width: 0; white-space: nowrap; overflow: hidden; }
+.reparto .auto-bien { background: var(--jev); }
+.reparto .auto-mal { background: var(--mal); }
+.reparto .humano { background: var(--suave); }
+.reparto-texto { font-size: 15px; margin-top: 8px; }
+
+/* ---------- Resumen de la carrera ---------- */
+.resumen { margin-top: 18px; background: var(--papel); border-radius: 14px; padding: 22px; display: none; }
+.resumen.visible { display: block; }
+.resumen h3 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 800; letter-spacing: -0.01em; max-width: 40ch; }
+.resumen .titular-sub { color: var(--suave); margin: 6px 0 18px; font-size: 15px; }
+.resumen-cuerpo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(260px, 1.1fr); gap: 22px; }
+.bloque h4 { font-family: var(--display); font-size: 19px; margin: 0 0 10px; }
+.metrica { margin-bottom: 12px; }
+.metrica .nombre { font-size: 14px; color: var(--suave); display: flex; justify-content: space-between; gap: 8px; }
+.metrica .nombre em { font-style: normal; font-weight: 700; color: var(--tinta); white-space: nowrap; }
+.par { display: grid; gap: 3px; margin-top: 4px; }
+.par .linea { display: grid; grid-template-columns: 34px minmax(0, 1fr) 76px; gap: 6px; align-items: center; font-size: 13px; }
+.par .linea span:last-child { text-align: right; }
+.par .linea.gana span:last-child { font-weight: 700; color: var(--tinta); }
+.par .pista { height: 9px; background: var(--fondo); border-radius: 5px; overflow: hidden; }
+.par .relleno { height: 100%; width: 0; border-radius: 5px; transition: width .7s cubic-bezier(.2, .8, .2, 1); }
+.par .linea[data-c=llm] .relleno { background: var(--llm); }
+.par .linea[data-c=jev] .relleno { background: var(--jev); }
+.par .linea[data-c=llm] span:first-child { color: var(--llm); font-weight: 700; }
+.par .linea[data-c=jev] span:first-child { color: var(--jev); font-weight: 700; }
+.mapa svg { width: 100%; height: auto; display: block; }
+.mapa .eje { stroke: var(--linea); stroke-width: 1; }
+.mapa text { fill: var(--suave); font-size: 11px; font-family: var(--texto); }
+.mapa .etq { font-weight: 700; font-size: 13px; }
+.mapa p { font-size: 13px; color: var(--suave); margin: 6px 0 0; }
+@media (max-width: 1100px) { .resumen-cuerpo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .resumen-cuerpo { grid-template-columns: 1fr; } }
+.aviso { background: var(--mal); color: #fff; border-radius: 10px; padding: 10px 14px; margin: 10px 0; display: none; }
+.aviso.visible { display: block; }
+footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
+
+@media (max-width: 1100px) {
+  .cabecera { grid-template-columns: 1fr; gap: 20px; }
+  .carriles { grid-template-columns: 1fr; }
+  .pista-carrera { grid-template-columns: 1fr; }
+  .marcador { text-align: left; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .automatizar { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .envoltorio { padding: 0 16px; }
+  .celdas { grid-template-columns: repeat(20, minmax(0, 1fr)); }
+  .cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cifra:nth-child(3) { border-left: 0; }
+  .cifra:nth-child(n+3) { border-top: 1px solid var(--linea); }
+  .boton { margin-left: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="envoltorio">
+
+  <section class="cabecera">
+    <div>
+      <h1><span class="c-llm">Un LLM escribe.</span><span class="c-jev">Jev decide.</span><span class="c-mix">Juntos, cada uno a lo suyo.</span></h1>
+      <p>El mismo ticket de soporte recorre tres caminos en vivo contra OpenRouter. El LLM tiene que redactar un JSON y luego hay que leerlo. Jev, un modelo de decisión, devuelve directamente probabilidades. El flujo combinado deja decidir a Jev y solo llama al LLM cuando hay algo que escribir.</p>
+    </div>
+    <form class="mesa" id="mesa">
+      <label for="ticket">Ticket de soporte</label>
+      <textarea id="ticket" required>Sois unos inútiles, me habéis cobrado dos veces la suscripción y nadie me contesta. Quiero mi dinero.</textarea>
+      <div class="ejemplos" id="ejemplos" aria-label="Tickets de ejemplo"></div>
+      <div class="controles">
+        <span class="campo"><label for="modelo-llm" style="margin:0;font-weight:400">LLM para clasificar</label><select id="modelo-llm"></select></span>
+        <span class="campo"><label for="umbral" style="margin:0;font-weight:400">Confianza mínima</label><input type="range" id="umbral" min="0.5" max="0.99" step="0.01" value="0.8"><output id="umbral-v">0.80</output></span>
+        <button class="boton" id="lanzar" type="submit">Clasificar este ticket</button>
+      </div>
+      <div class="esperado" id="esperado"></div>
+    </form>
+  </section>
+
+  <div class="aviso" id="aviso" role="alert"></div>
+
+  <section class="carriles" aria-live="polite">
+    <article class="carril" data-c="llm">
+      <header>
+        <h2>LLM</h2>
+        <div class="que">Genera texto token a token; el JSON hay que parsearlo.</div>
+        <div class="modelo" id="m-llm"></div>
+      </header>
+      <ol class="pasos">
+        <li class="paso" data-p="llm-prompt"><span class="titulo">Montar el prompt</span><span class="tiempo"></span>
+          <div class="detalle">Instrucciones, formato JSON y el ticket, en un mensaje.</div></li>
+        <li class="paso" data-p="llm-gen"><span class="titulo">Generar la respuesta</span><span class="tiempo"></span>
+          <div class="detalle"><div class="salida-llm" id="llm-texto"></div></div></li>
+        <li class="paso" data-p="llm-parse"><span class="titulo">Leer el JSON</span><span class="tiempo"></span>
+          <div class="detalle" id="llm-parse-d">Si el modelo se sale del formato, no hay respuesta.</div></li>
+        <li class="paso" data-p="llm-res"><span class="titulo">Resultado</span><span class="tiempo"></span>
+          <div class="detalle" id="llm-res"></div></li>
+      </ol>
+      <div class="cifras">
+        <div class="cifra"><b id="llm-ms">–</b><span>ms totales</span></div>
+        <div class="cifra"><b id="llm-ttft">–</b><span>ms al primer token</span></div>
+        <div class="cifra"><b id="llm-tok">–</b><span>tokens generados</span></div>
+        <div class="cifra"><b id="llm-coste">–</b><span>por 1.000 tickets</span></div>
+      </div>
+    </article>
+
+    <article class="carril" data-c="jev">
+      <header>
+        <h2>Jev</h2>
+        <div class="que">Responde las preguntas en una llamada, con probabilidades.</div>
+        <div class="modelo" id="m-jev"></div>
+      </header>
+      <ol class="pasos">
+        <li class="paso" data-p="jev-envio"><span class="titulo">Enviar estado y preguntas</span><span class="tiempo"></span>
+          <div class="detalle">El ticket como <code>state</code>; equipo, reembolso y urgencia como <code>questions</code> tipadas.</div></li>
+        <li class="paso" data-p="jev-dec"><span class="titulo">Decidir</span><span class="tiempo"></span>
+          <div class="detalle" id="jev-dec-d">Una sola llamada a <code>/v1/systemone</code>. Sin texto que parsear.</div></li>
+        <li class="paso" data-p="jev-res"><span class="titulo">Resultado</span><span class="tiempo"></span>
+          <div class="detalle" id="jev-res"></div></li>
+      </ol>
+      <div class="cifras">
+        <div class="cifra"><b id="jev-ms">–</b><span>ms totales</span></div>
+        <div class="cifra"><b id="jev-n">–</b><span>llamadas</span></div>
+        <div class="cifra"><b id="jev-tok">–</b><span>tokens de entrada</span></div>
+        <div class="cifra"><b id="jev-coste">–</b><span>por 1.000 tickets</span></div>
+      </div>
+    </article>
+
+    <article class="carril" data-c="mix">
+      <header>
+        <h2>Combinado</h2>
+        <div class="que">Jev decide; el LLM solo escribe cuando la decisión está clara.</div>
+        <div class="modelo" id="m-mix"></div>
+      </header>
+      <ol class="pasos">
+        <li class="paso" data-p="mix-jev"><span class="titulo">Jev clasifica</span><span class="tiempo"></span>
+          <div class="detalle" id="mix-jev-d">La misma decisión del carril de Jev.</div></li>
+        <li class="paso" data-p="mix-gate"><span class="titulo">¿Está claro?</span><span class="tiempo"></span>
+          <div class="detalle" id="mix-gate-d">Se compara la confianza con el umbral elegido.</div></li>
+        <li class="paso" data-p="mix-borrador"><span class="titulo">El LLM redacta la respuesta</span><span class="tiempo"></span>
+          <div class="detalle"><div class="salida-llm" id="mix-texto"></div></div></li>
+      </ol>
+      <div class="cifras">
+        <div class="cifra"><b id="mix-ms">–</b><span>ms totales</span></div>
+        <div class="cifra"><b id="mix-dec">–</b><span>ms en decidir</span></div>
+        <div class="cifra"><b id="mix-n">–</b><span>llamadas</span></div>
+        <div class="cifra"><b id="mix-coste">–</b><span>por 1.000 tickets</span></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="carrera" id="carrera">
+    <div class="carrera-cab">
+      <div>
+        <h2>Los 40 tickets etiquetados, a la vez</h2>
+        <p>Cada carril procesa los tickets uno detrás de otro, como haría un sistema de soporte. Cada casilla es un ticket comparado con su etiqueta manual.</p>
+      </div>
+      <button class="boton" id="correr" type="button">Lanzar la carrera</button>
+    </div>
+    <div class="pistas">
+      <div class="pista-carrera" data-c="llm">
+        <div><h3>LLM</h3><div class="modelo" id="c-m-llm"></div></div>
+        <div class="celdas" id="celdas-llm"></div>
+        <div class="marcador">
+          <div><b id="c-llm-hechos">0</b><span>de 40</span></div>
+          <div><b id="c-llm-acierto">–</b><span>las 3 bien</span></div>
+          <div><b id="c-llm-ms">–</b><span>ms por ticket</span></div>
+          <div><b id="c-llm-coste">–</b><span>coste total</span></div>
+        </div>
+      </div>
+      <div class="pista-carrera" data-c="jev">
+        <div><h3>Jev</h3><div class="modelo" id="c-m-jev"></div></div>
+        <div class="celdas" id="celdas-jev"></div>
+        <div class="marcador">
+          <div><b id="c-jev-hechos">0</b><span>de 40</span></div>
+          <div><b id="c-jev-acierto">–</b><span>las 3 bien</span></div>
+          <div><b id="c-jev-ms">–</b><span>ms por ticket</span></div>
+          <div><b id="c-jev-coste">–</b><span>coste total</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="leyenda">
+      <span><i style="background:var(--suave);border-color:var(--suave)"></i>Las tres respuestas bien</span>
+      <span><i style="background:linear-gradient(to top,var(--suave) 45%,transparent 45%)"></i>Equipo bien, falla otra</span>
+      <span><i style="background:var(--mal);border-color:var(--mal)"></i>Equipo mal o JSON roto</span>
+    </div>
+
+    <div class="resumen" id="resumen" aria-live="polite">
+      <h3 id="resumen-titular"></h3>
+      <p class="titular-sub" id="resumen-sub"></p>
+      <div class="resumen-cuerpo">
+        <div class="bloque"><h4>Calidad</h4><div id="r-calidad"></div></div>
+        <div class="bloque"><h4>Tiempo</h4><div id="r-tiempo"></div></div>
+        <div class="bloque"><h4>Coste</h4><div id="r-coste"></div></div>
+        <div class="bloque mapa"><h4>Tiempo frente a calidad</h4><div id="r-mapa"></div>
+          <p>Arriba a la izquierda es mejor: más acierto en menos tiempo. El tamaño del círculo es el coste.</p></div>
+      </div>
+    </div>
+    <div class="automatizar">
+      <div>
+        <h3>¿Cuánto puedo automatizar sin equivocarme?</h3>
+        <p>Solo Jev da una confianza útil: se automatiza lo que tiene claro y lo demás pasa a una persona. El LLM no ofrece una señal comparable. Se rellena al terminar la carrera de Jev.</p>
+        <div class="deslizador">
+          <label for="umbral-c">Confianza mínima</label>
+          <input type="range" id="umbral-c" min="0" max="0.99" step="0.01" value="0.8">
+          <output id="umbral-c-v">0.80</output>
+        </div>
+      </div>
+      <div>
+        <div class="reparto" id="reparto"><div class="humano" style="flex-grow:1">Lanza la carrera</div></div>
+        <div class="reparto-texto" id="reparto-texto"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="pie"></footer>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const paso = (id) => document.querySelector(`[data-p="${id}"]`);
+let CFG = null;
+let ticketEsperado = null;
+
+const fmtMs = (ms) => (ms == null ? "–" : Math.round(ms).toLocaleString("es-ES"));
+const fmtCoste = (usd) => (usd == null ? "–" : "$" + (usd < 0.001 ? usd.toFixed(6) : usd.toFixed(4)));
+// En los carriles el coste de un ticket es diminuto: se muestra lo que costarían 1.000 tickets
+const fmtMil = (usd) => (usd == null ? "–" : "$" + (usd * 1000).toFixed(usd * 1000 < 0.1 ? 3 : 2));
+const pct = (x) => Math.round(x * 100) + " %";
+const nombreUrg = (i) => ["Rutina", "Pronto", "Urgente"][i];
+
+function marcarPaso(id, estado, ms) {
+  const el = paso(id);
+  el.classList.remove("activo", "hecho", "error", "saltado");
+  if (estado) el.classList.add(estado);
+  if (ms !== undefined) el.querySelector(".tiempo").textContent = ms == null ? "" : fmtMs(ms) + " ms";
+}
+
+function avisar(msg) {
+  const a = $("#aviso");
+  a.textContent = msg;
+  a.classList.toggle("visible", !!msg);
+}
+
+async function leerNDJSON(resp, alEvento) {
+  if (!resp.ok) throw new Error((await resp.json().catch(() => ({}))).error || `HTTP ${resp.status}`);
+  const lector = resp.body.getReader();
+  const dec = new TextDecoder();
+  let resto = "";
+  for (;;) {
+    const { value, done } = await lector.read();
+    if (done) break;
+    resto += dec.decode(value, { stream: true });
+    let i;
+    while ((i = resto.indexOf("\n")) >= 0) {
+      const linea = resto.slice(0, i).trim();
+      resto = resto.slice(i + 1);
+      if (!linea) continue;
+      const ev = JSON.parse(linea);
+      if (ev.tipo === "error") throw new Error(ev.mensaje);
+      alEvento(ev);
+    }
+  }
+}
+
+const post = (url, cuerpo) => fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(cuerpo) });
+
+function parsearLLM(texto) {
+  const limpio = texto.replace(/<think>[\s\S]*?<\/think>/g, "");
+  const m = limpio.match(/\{[\s\S]*\}/);
+  if (!m) return null;
+  try {
+    const d = JSON.parse(m[0]);
+    if (!(d.equipo in CFG.preguntas.equipo.criteria) || ![0, 1, 2].includes(Number(d.urgencia))) return null;
+    return { equipo: d.equipo, reembolso: Boolean(d.reembolso), urgencia: Number(d.urgencia) };
+  } catch { return null; }
+}
+
+function decisionJev(ans) {
+  const u = ans.urgencia.probabilities;
+  const urg = Number(Object.keys(u).reduce((a, b) => (u[a] >= u[b] ? a : b)));
+  return { equipo: ans.equipo.choice, reembolso: ans.reembolso.noul > 0.5, urgencia: urg, urgenciaScore: ans.urgencia.score };
+}
+
+function marca(clave, valor) {
+  if (!ticketEsperado) return "";
+  const ok = ticketEsperado[clave] === valor;
+  return `<span class="marca ${ok ? "ok" : "mal"}">${ok ? "coincide" : "esperado: " + textoValor(clave, ticketEsperado[clave])}</span>`;
+}
+function textoValor(clave, v) {
+  if (clave === "reembolso") return v ? "sí" : "no";
+  if (clave === "urgencia") return nombreUrg(v);
+  return v;
+}
+
+function barras(probs, etiquetas) {
+  const ganadora = Object.keys(probs).reduce((a, b) => (probs[a] >= probs[b] ? a : b));
+  return `<div class="barras">${Object.keys(etiquetas).map((k) => `
+    <div class="barra ${k === ganadora ? "ganadora" : ""}"><span>${etiquetas[k]}</span>
+      <div class="pista"><div class="relleno" data-w="${(probs[k] || 0) * 100}"></div></div>
+      <span>${Math.round((probs[k] || 0) * 100)}%</span></div>`).join("")}</div>`;
+}
+function animarBarras(cont) {
+  requestAnimationFrame(() => cont.querySelectorAll(".relleno").forEach((r) => (r.style.width = r.dataset.w + "%")));
+}
+
+/* ---------- Carril LLM ---------- */
+async function carrilLLM(ticket) {
+  const modelo = $("#modelo-llm").value;
+  $("#m-llm").textContent = modelo;
+  const t0 = performance.now();
+  marcarPaso("llm-prompt", "hecho", 0);
+  paso("llm-prompt").querySelector(".detalle").textContent = `${CFG.prompt_llm.length + ticket.length} caracteres de instrucciones y ticket.`;
+  marcarPaso("llm-gen", "activo");
+  const salida = $("#llm-texto");
+  salida.textContent = "";
+  salida.classList.add("escribiendo");
+  let razon = 0, fin = null;
+  await leerNDJSON(await post("/api/llm", { ticket, modelo }), (ev) => {
+    if (ev.tipo === "razonando") { razon += ev.t.length; if (!salida.dataset.texto) salida.textContent = `Pensando… ${razon} caracteres de razonamiento`; }
+    if (ev.tipo === "token") { salida.dataset.texto = "1"; if (salida.textContent.startsWith("Pensando")) salida.textContent = ""; salida.textContent += ev.t; salida.scrollTop = salida.scrollHeight; }
+    if (ev.tipo === "fin") fin = ev;
+  });
+  delete salida.dataset.texto;
+  salida.classList.remove("escribiendo");
+  marcarPaso("llm-gen", "hecho", fin.ms);
+  $("#llm-ttft").textContent = fmtMs(fin.ms_primer_token);
+  $("#llm-tok").textContent = fin.tokens_salida + (fin.tokens_razonamiento ? ` (${fin.tokens_razonamiento} pensando)` : "");
+  $("#llm-coste").textContent = fmtMil(fin.coste);
+
+  const pred = parsearLLM(fin.texto);
+  const total = performance.now() - t0;
+  $("#llm-ms").textContent = fmtMs(total);
+  if (!pred) {
+    marcarPaso("llm-parse", "error", 0);
+    $("#llm-parse-d").textContent = "El texto no es un JSON válido: este ticket se queda sin clasificar.";
+    marcarPaso("llm-res", "error");
+    $("#llm-res").textContent = "Sin resultado.";
+    return { pred: null, ms: total, coste: fin.coste };
+  }
+  marcarPaso("llm-parse", "hecho", 0);
+  $("#llm-parse-d").textContent = "JSON válido.";
+  marcarPaso("llm-res", "hecho");
+  $("#llm-res").innerHTML = `<div class="resultado">
+    <div class="fila-res"><span>Equipo</span><span><span class="valor">${pred.equipo}</span>${marca("equipo", pred.equipo)}</span></div>
+    <div class="fila-res"><span>Reembolso</span><span><span class="valor">${pred.reembolso ? "sí" : "no"}</span>${marca("reembolso", pred.reembolso)}</span></div>
+    <div class="fila-res"><span>Urgencia</span><span><span class="valor">${nombreUrg(pred.urgencia)}</span>${marca("urgencia", pred.urgencia)}</span></div>
+    <div class="sin-prob">Sin probabilidades: no hay forma de saber si el modelo dudaba.</div></div>`;
+  return { pred, ms: total, coste: fin.coste };
+}
+
+/* ---------- Carril Jev ---------- */
+async function llamarJev(ticket) {
+  const r = await post("/api/jev", { ticket });
+  const d = await r.json();
+  if (!r.ok) throw new Error(d.error || `HTTP ${r.status}`);
+  return d;
+}
+
+function pintarJev(d, contenedor) {
+  const a = d.respuesta.answers;
+  const pred = decisionJev(a);
+  const etqEquipo = Object.fromEntries(Object.keys(CFG.preguntas.equipo.criteria).map((k) => [k, k]));
+  const etqUrg = { 0: "Rutina", 1: "Pronto", 2: "Urgente" };
+  contenedor.innerHTML = `<div class="resultado">
+    <div><div class="fila-res"><span>Equipo</span><span><span class="valor">${pred.equipo}</span>${marca("equipo", pred.equipo)}</span></div>
+      ${barras(a.equipo.probabilities, etqEquipo)}<div class="confianza">Confianza ${a.equipo.confidence.toFixed(2)}</div></div>
+    <div class="fila-res"><span>Reembolso</span><span><span class="valor">P(sí) = ${a.reembolso.noul.toFixed(2)}</span>${marca("reembolso", pred.reembolso)}</span></div>
+    <div><div class="fila-res"><span>Urgencia</span><span><span class="valor">${a.urgencia.score.toFixed(2)} de 2</span>${marca("urgencia", pred.urgencia)}</span></div>
+      ${barras(a.urgencia.probabilities, etqUrg)}<div class="confianza">Confianza ${a.urgencia.confidence.toFixed(2)}</div></div></div>`;
+  animarBarras(contenedor);
+  return pred;
+}
+
+async function carrilJev(promesaJev) {
+  $("#m-jev").textContent = CFG.jev;
+  marcarPaso("jev-envio", "hecho", 0);
+  marcarPaso("jev-dec", "activo");
+  const d = await promesaJev;
+  const u = d.respuesta.usage || {};
+  marcarPaso("jev-dec", "hecho", d.ms);
+  $("#jev-dec-d").textContent = `Respondió ${Object.keys(d.respuesta.answers).length} preguntas en una llamada.`;
+  marcarPaso("jev-res", "hecho");
+  const pred = pintarJev(d, $("#jev-res"));
+  $("#jev-ms").textContent = fmtMs(d.ms);
+  $("#jev-n").textContent = "1";
+  $("#jev-tok").textContent = u.input_tokens ?? "–";
+  $("#jev-coste").textContent = fmtMil(u.cost);
+  return pred;
+}
+
+/* ---------- Carril combinado ---------- */
+async function carrilMix(ticket, promesaJev) {
+  $("#m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}`;
+  const t0 = performance.now();
+  marcarPaso("mix-jev", "activo");
+  const d = await promesaJev;
+  const a = d.respuesta.answers;
+  const pred = decisionJev(a);
+  const costeJev = (d.respuesta.usage || {}).cost || 0;
+  marcarPaso("mix-jev", "hecho", d.ms);
+  $("#mix-jev-d").textContent = `${pred.equipo}, reembolso ${pred.reembolso ? "sí" : "no"}, urgencia ${a.urgencia.score.toFixed(2)} de 2.`;
+  $("#mix-dec").textContent = fmtMs(d.ms);
+
+  const umbral = Number($("#umbral").value);
+  const conf = a.equipo.confidence;
+  const claro = conf >= umbral;
+  marcarPaso("mix-gate", "hecho", 0);
+  $("#mix-gate-d").innerHTML = `<div>Confianza en el equipo frente al umbral:</div><div class="compuerta"><div class="medidor"><div class="nivel" style="width:0"></div><div class="umbral" style="left:${umbral * 100}%"></div></div>
+    <span class="veredicto ${claro ? "si" : "no"}">${conf.toFixed(2)} ${claro ? "≥" : "<"} ${umbral.toFixed(2)}</span></div>
+    <div>${claro ? "Decisión clara: se automatiza." : "Jev duda: el ticket va a una persona y no se gasta el LLM grande."}</div>`;
+  requestAnimationFrame(() => ($("#mix-gate-d .nivel").style.width = conf * 100 + "%"));
+
+  const salida = $("#mix-texto");
+  const tituloBorrador = paso("mix-borrador").querySelector(".titulo");
+  if (!claro) {
+    marcarPaso("mix-borrador", "saltado", null);
+    tituloBorrador.textContent = "El LLM redacta la respuesta";
+    salida.textContent = `A revisión humana con la clasificación propuesta: ${pred.equipo}, urgencia ${nombreUrg(pred.urgencia)}.`;
+    $("#mix-ms").textContent = fmtMs(performance.now() - t0);
+    $("#mix-n").textContent = "1";
+    $("#mix-coste").textContent = fmtMil(costeJev);
+    return;
+  }
+  marcarPaso("mix-borrador", "activo");
+  salida.textContent = "";
+  salida.classList.add("escribiendo");
+  let razon = 0, fin = null, empezado = false;
+  await leerNDJSON(await post("/api/borrador", { ticket, clasificacion: { equipo: pred.equipo, reembolso: pred.reembolso, urgencia: pred.urgenciaScore } }), (ev) => {
+    if (ev.tipo === "razonando" && !empezado) { razon += ev.t.length; salida.textContent = `Pensando… ${razon} caracteres de razonamiento`; }
+    if (ev.tipo === "token") { if (!empezado) { salida.textContent = ""; empezado = true; } salida.textContent += ev.t; salida.scrollTop = salida.scrollHeight; }
+    if (ev.tipo === "fin") fin = ev;
+  });
+  salida.classList.remove("escribiendo");
+  salida.textContent = fin.texto.replace(/\*\*/g, "");
+  marcarPaso("mix-borrador", "hecho", fin.ms);
+  $("#mix-ms").textContent = fmtMs(performance.now() - t0);
+  $("#mix-n").textContent = "2";
+  $("#mix-coste").textContent = fmtMil(costeJev + fin.coste);
+}
+
+/* ---------- Orquestación de un ticket ---------- */
+function reiniciarCarriles() {
+  document.querySelectorAll(".paso").forEach((p) => { p.className = "paso"; p.querySelector(".tiempo").textContent = ""; });
+  document.querySelectorAll(".cifra b").forEach((b) => (b.textContent = "–"));
+  $("#llm-texto").textContent = ""; $("#mix-texto").textContent = "";
+  $("#llm-res").textContent = ""; $("#jev-res").textContent = "";
+  $("#llm-parse-d").textContent = "Si el modelo se sale del formato, no hay respuesta.";
+  $("#jev-dec-d").innerHTML = "Una sola llamada a <code>/v1/systemone</code>. Sin texto que parsear.";
+  $("#mix-jev-d").textContent = "La misma decisión del carril de Jev.";
+  $("#mix-gate-d").textContent = "Se compara la confianza con el umbral elegido.";
+}
+
+$("#mesa").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const ticket = $("#ticket").value.trim();
+  if (!ticket) return;
+  avisar("");
+  reiniciarCarriles();
+  const boton = $("#lanzar");
+  boton.disabled = true; boton.textContent = "Clasificando…";
+  const promesaJev = llamarJev(ticket);
+  const resultados = await Promise.allSettled([carrilLLM(ticket), carrilJev(promesaJev), carrilMix(ticket, promesaJev)]);
+  const fallo = resultados.find((r) => r.status === "rejected");
+  if (fallo) avisar("Algo falló al llamar a OpenRouter: " + fallo.reason.message);
+  boton.disabled = false; boton.textContent = "Clasificar este ticket";
+});
+
+$("#ticket").addEventListener("input", () => { ticketEsperado = null; pintarEsperado(); });
+$("#umbral").addEventListener("input", (e) => ($("#umbral-v").textContent = Number(e.target.value).toFixed(2)));
+
+function pintarEsperado() {
+  $("#esperado").textContent = ticketEsperado
+    ? `Etiqueta manual: ${ticketEsperado.equipo}, reembolso ${ticketEsperado.reembolso ? "sí" : "no"}, urgencia ${nombreUrg(ticketEsperado.urgencia)}.`
+    : "Ticket libre: sin etiqueta manual con la que comparar.";
+}
+
+/* ---------- Carrera ---------- */
+const filasJev = [];
+
+function nuevaCelda(cont) {
+  const c = document.createElement("div");
+  c.className = "celda";
+  cont.appendChild(c);
+  return c;
+}
+
+async function correrCarril(tipo, tickets, modelo) {
+  const celdas = [...document.querySelectorAll(`#celdas-${tipo} .celda`)];
+  let hechos = 0, bien = 0, msTotal = 0, coste = 0;
+  const st = { n: tickets.length, equipo: 0, reembolso: 0, urgencia: 0, rotos: 0, ms: [], inicio: performance.now() };
+  for (let i = 0; i < tickets.length; i++) {
+    const t = tickets[i];
+    celdas[i].className = "celda en-curso";
+    const t0 = performance.now();
+    let pred = null, conf = 0;
+    try {
+      if (tipo === "jev") {
+        const d = await llamarJev(t.ticket);
+        pred = decisionJev(d.respuesta.answers);
+        conf = d.respuesta.answers.equipo.confidence;
+        coste += (d.respuesta.usage || {}).cost || 0;
+      } else {
+        let fin = null;
+        await leerNDJSON(await post("/api/llm", { ticket: t.ticket, modelo }), (ev) => { if (ev.tipo === "fin") fin = ev; });
+        pred = parsearLLM(fin.texto);
+        coste += fin.coste;
+      }
+    } catch (err) { console.warn(err); }
+    msTotal += performance.now() - t0;
+    st.ms.push(performance.now() - t0);
+    hechos++;
+    if (!pred) st.rotos++;
+    else ["equipo", "reembolso", "urgencia"].forEach((k) => { if (pred[k] === t[k]) st[k]++; });
+    const tres = pred && pred.equipo === t.equipo && pred.reembolso === t.reembolso && pred.urgencia === t.urgencia;
+    if (tres) bien++;
+    celdas[i].className = "celda " + (!pred || pred.equipo !== t.equipo ? "mal" : tres ? "bien" : "parcial");
+    celdas[i].title = `${t.ticket}\nEsperado: ${t.equipo}, ${t.reembolso ? "reembolso" : "sin reembolso"}, ${nombreUrg(t.urgencia)}` +
+      (pred ? `\nObtenido: ${pred.equipo}, ${pred.reembolso ? "reembolso" : "sin reembolso"}, ${nombreUrg(pred.urgencia)}` : "\nSin resultado");
+    if (tipo === "jev") filasJev.push({ ok: pred && pred.equipo === t.equipo, conf });
+    $(`#c-${tipo}-hechos`).textContent = hechos;
+    $(`#c-${tipo}-acierto`).textContent = pct(bien / hechos);
+    $(`#c-${tipo}-ms`).textContent = fmtMs(msTotal / hechos);
+    $(`#c-${tipo}-coste`).textContent = fmtCoste(coste);
+    if (tipo === "jev") pintarReparto();
+  }
+  return { ...st, tres: bien, coste, duracion: performance.now() - st.inicio };
+}
+
+/* ---------- Resumen de la carrera ---------- */
+const p95 = (xs) => { const o = [...xs].sort((a, b) => a - b); return o[Math.min(o.length - 1, Math.ceil(o.length * 0.95) - 1)]; };
+const media = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
+const veces = (x) => x.toLocaleString("es-ES", { maximumFractionDigits: 1 });
+
+function metrica(nombre, valLLM, valJev, fmt, mayorEsMejor) {
+  const max = Math.max(valLLM, valJev) || 1;
+  const ganaJev = mayorEsMejor ? valJev > valLLM : valJev < valLLM;
+  const ganaLLM = mayorEsMejor ? valLLM > valJev : valLLM < valJev;
+  const lo = Math.min(valLLM, valJev), hi = Math.max(valLLM, valJev);
+  const dif = !mayorEsMejor && lo > 0 && hi / lo >= 1.15 ? `${veces(hi / lo)}× menos con ${ganaJev ? "Jev" : "LLM"}` : "";
+  const linea = (c, v, gana) => `<div class="linea ${gana ? "gana" : ""}" data-c="${c}"><span>${c === "llm" ? "LLM" : "Jev"}</span>
+    <div class="pista"><div class="relleno" data-w="${(v / max) * 100}"></div></div><span>${fmt(v)}</span></div>`;
+  return `<div class="metrica"><div class="nombre"><span>${nombre}</span><em>${dif}</em></div>
+    <div class="par">${linea("llm", valLLM, ganaLLM)}${linea("jev", valJev, ganaJev)}</div></div>`;
+}
+
+function mapa(L, J) {
+  const W = 300, H = 210, m = { l: 40, r: 14, t: 14, b: 34 };
+  const xMax = Math.max(media(L.ms), media(J.ms)) * 1.25;
+  const x = (v) => m.l + (v / xMax) * (W - m.l - m.r);
+  const y = (v) => H - m.b - v * (H - m.t - m.b);
+  const cMax = Math.max(L.coste, J.coste) || 1;
+  const r = (c) => 8 + 22 * Math.sqrt(c / cMax);
+  const punto = (st, nombre, color) => {
+    const cx = x(media(st.ms)), cy = y(st.tres / st.n), rr = r(st.coste);
+    return `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2"/>
+      <text class="etq" x="${cx}" y="${cy - rr - 6}" text-anchor="middle" style="fill:${color}">${nombre}</text>`;
+  };
+  const marcasY = [0, 0.25, 0.5, 0.75, 1].map((v) => `<line class="eje" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" ${v ? 'stroke-dasharray="2 3"' : ""}/>
+    <text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v * 100}%</text>`).join("");
+  const pasoX = xMax > 3000 ? 1000 : 500;
+  const marcasX = Array.from({ length: Math.floor(xMax / pasoX) + 1 }, (_, i) => i * pasoX)
+    .map((v) => `<text x="${x(v)}" y="${H - m.b + 16}" text-anchor="middle">${veces(v / 1000)} s</text>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Tiempo medio por ticket frente a acierto">
+    ${marcasY}${marcasX}
+    <text x="${(m.l + W - m.r) / 2}" y="${H - 4}" text-anchor="middle">tiempo medio por ticket</text>
+    ${punto(L, "LLM", "var(--llm)")}${punto(J, "Jev", "var(--jev)")}</svg>`;
+}
+
+function pintarResumen(L, J) {
+  const msL = media(L.ms), msJ = media(J.ms);
+  const partes = [];
+  if (msJ < msL) partes.push(`${veces(msL / msJ)} veces más rápido`);
+  if (J.coste > 0 && J.coste < L.coste) partes.push(`${veces(L.coste / J.coste)} veces más barato`);
+  const puntos = Math.round((J.tres / J.n - L.tres / L.n) * 100);
+  if (puntos > 0) partes.push(`ha acertado ${puntos} puntos más`);
+  $("#resumen-titular").textContent = partes.length
+    ? `Jev ha sido ${partes.slice(0, -1).join(", ")}${partes.length > 1 ? " y " : ""}${partes.at(-1)}.`
+    : "En esta carrera el LLM no ha salido peor que Jev.";
+  $("#resumen-sub").textContent = `${L.n} tickets etiquetados a mano. LLM: ${$("#c-m-llm").textContent}. Jev: ${CFG.jev}. ` +
+    `Jev terminó en ${veces(J.duracion / 1000)} s y el LLM en ${veces(L.duracion / 1000)} s.`;
+
+  const pc = (v) => Math.round(v * 100) + " %";
+  $("#r-calidad").innerHTML =
+    metrica("Las 3 respuestas bien", L.tres / L.n, J.tres / J.n, pc, true) +
+    metrica("Equipo", L.equipo / L.n, J.equipo / J.n, pc, true) +
+    metrica("Reembolso", L.reembolso / L.n, J.reembolso / J.n, pc, true) +
+    metrica("Urgencia", L.urgencia / L.n, J.urgencia / J.n, pc, true) +
+    metrica("Respuestas inservibles", L.rotos, J.rotos, (v) => String(v), false);
+  $("#r-tiempo").innerHTML =
+    metrica("Media por ticket", msL, msJ, (v) => fmtMs(v) + " ms", false) +
+    metrica("Peor 5 % (p95)", p95(L.ms), p95(J.ms), (v) => fmtMs(v) + " ms", false) +
+    metrica(`Los ${L.n} tickets`, L.duracion, J.duracion, (v) => veces(v / 1000) + " s", false);
+  $("#r-coste").innerHTML =
+    metrica(`Los ${L.n} tickets`, L.coste, J.coste, fmtCoste, false) +
+    metrica("Por 1.000 tickets", L.coste / L.n, J.coste / J.n, fmtMil, false);
+  $("#r-mapa").innerHTML = mapa(L, J);
+
+  const caja = $("#resumen");
+  caja.classList.add("visible");
+  animarBarras(caja);
+  caja.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+}
+
+function pintarReparto() {
+  const u = Number($("#umbral-c").value);
+  $("#umbral-c-v").textContent = u.toFixed(2);
+  if (!filasJev.length) return;
+  const n = filasJev.length;
+  const auto = filasJev.filter((f) => f.conf >= u);
+  const autoBien = auto.filter((f) => f.ok).length;
+  const autoMal = auto.length - autoBien;
+  const humano = n - auto.length;
+  const seg = (cls, k, txt) => `<div class="${cls}" style="flex-grow:${k}">${k ? txt : ""}</div>`;
+  $("#reparto").innerHTML = seg("auto-bien", autoBien, `${autoBien} bien`) + seg("auto-mal", autoMal, `${autoMal} mal`) + seg("humano", humano, `${humano} a persona`);
+  $("#reparto-texto").textContent = `Con confianza ≥ ${u.toFixed(2)} se automatizan ${pct(auto.length / n)} de los ${n} tickets` +
+    (auto.length ? `, con un ${pct(autoBien / auto.length)} de acierto en el equipo.` : ".");
+}
+$("#umbral-c").addEventListener("input", pintarReparto);
+
+$("#correr").addEventListener("click", async () => {
+  const boton = $("#correr");
+  boton.disabled = true; boton.textContent = "En carrera…";
+  const modelo = $("#modelo-llm").value;
+  $("#c-m-llm").textContent = modelo;
+  for (const tipo of ["llm", "jev"]) {
+    const cont = $(`#celdas-${tipo}`);
+    cont.innerHTML = "";
+    CFG.tickets.forEach(() => nuevaCelda(cont));
+    ["hechos", "acierto", "ms", "coste"].forEach((k) => ($(`#c-${tipo}-${k}`).textContent = k === "hechos" ? "0" : "–"));
+  }
+  filasJev.length = 0;
+  $("#resumen").classList.remove("visible");
+  const [stLLM, stJev] = await Promise.all([correrCarril("llm", CFG.tickets, modelo), correrCarril("jev", CFG.tickets)]);
+  pintarResumen(stLLM, stJev);
+  boton.disabled = false; boton.textContent = "Repetir la carrera";
+});
+
+/* ---------- Arranque ---------- */
+(async () => {
+  try {
+    CFG = await (await fetch("/api/config")).json();
+  } catch {
+    avisar("No hay conexión con el servidor de la demo. Arráncalo con: uv run demo_web.py");
+    return;
+  }
+  $("#modelo-llm").innerHTML = CFG.llms.map((m) => `<option>${m}</option>`).join("");
+  $("#m-llm").textContent = CFG.llms[0];
+  $("#m-jev").textContent = CFG.jev;
+  $("#m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}`;
+  $("#c-m-llm").textContent = CFG.llms[0];
+  $("#c-m-jev").textContent = CFG.jev;
+  ["llm", "jev"].forEach((t) => CFG.tickets.forEach(() => nuevaCelda($(`#celdas-${t}`))));
+  $("#pie").textContent = `Todo en vivo contra OpenRouter. Decisiones: ${CFG.jev}. Generación: ${CFG.llms.join(" y ")}.`;
+
+  const elegidos = [0, 1, 2, 5, 9, 14, 22, 31].filter((i) => i < CFG.tickets.length).map((i) => CFG.tickets[i]);
+  const cont = $("#ejemplos");
+  elegidos.forEach((t) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.textContent = t.ticket; b.title = t.ticket;
+    b.addEventListener("click", () => { $("#ticket").value = t.ticket; ticketEsperado = t; pintarEsperado(); });
+    cont.appendChild(b);
+  });
+  const azar = document.createElement("button");
+  azar.type = "button"; azar.textContent = "Otro al azar";
+  azar.addEventListener("click", () => { const t = CFG.tickets[Math.floor(Math.random() * CFG.tickets.length)]; $("#ticket").value = t.ticket; ticketEsperado = t; pintarEsperado(); });
+  cont.appendChild(azar);
+  pintarEsperado();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+Evaluando jev:typesafe/jev-1.13...
+┌─────────────────────────┬────────┬───────────┬──────────┬────────────┬──────────┬────────┬───────────┬───────────────┬─────────┐
+│ Modelo                  │ Equipo │ Reembolso │ Urgencia │ Las 3 bien │ ms media │ ms p95 │ JSON roto │ Tokens in/out │ Coste $ │
+├─────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┼─────────┤
+│ jev:typesafe/jev-1.13   │    98% │       98% │      82% │        80% │      331 │    387 │         0 │        492/89 │  0.0008 │
+├─────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┼─────────┤
+│ dec:openai/gpt-4o-mini  │    98% │      100% │      68% │        68% │     1337 │   1981 │         0 │         400/3 │  0.0025 │
+├─────────────────────────┼────────┼───────────┼──────────┼────────────┼──────────┼────────┼───────────┼───────────────┼─────────┤
+│ json:openai/gpt-4o-mini │    92% │      100% │      70% │        68% │     1842 │   2638 │         0 │        209/21 │  0.0018 │
+└─────────────────────────┴────────┴───────────┴──────────┴────────────┴──────────┴────────┴───────────┴───────────────┴─────────┘
+   jev:typesafe/jev-1.13: si solo automatizo cuando confianza(equipo) >=   
+                                  umbral                                   
+┌────────┬───────────────┬────────────────────────────┬───────────────────┐
+│ Umbral │ Se automatiza │ Acierto en lo automatizado │ A revisión humana │
+├────────┼───────────────┼────────────────────────────┼───────────────────┤
+│    0.0 │          100% │                        98% │                 0 │
+│    0.5 │          100% │                        98% │                 0 │
+│    0.7 │           98% │                        97% │                 1 │
+│    0.8 │           95% │                       100% │                 2 │
+│    0.9 │           85% │                       100% │                 6 │
+└────────┴───────────────┴────────────────────────────┴───────────────────┘
+  dec:openai/gpt-4o-mini: si solo automatizo cuando confianza(equipo) >=   
+                                  umbral                                   
+┌────────┬───────────────┬────────────────────────────┬───────────────────┐
+│ Umbral │ Se automatiza │ Acierto en lo automatizado │ A revisión humana │
+├────────┼───────────────┼────────────────────────────┼───────────────────┤
+│    0.0 │          100% │                        98% │                 0 │
+│    0.5 │          100% │                        98% │                 0 │
+│    0.7 │           95% │                        97% │                 2 │
+│    0.8 │           95% │                        97% │                 2 │
+│    0.9 │           92% │                        97% │                 3 │
+└────────┴───────────────┴────────────────────────────┴───────────────────┘
+
+jev:typesafe/jev-1.13 falla 'equipo' en:
+  esperado=tecnico     obtenido=facturacion Los pagos de nuestros clientes se están rechazando todos en el checkou
+
+dec:openai/gpt-4o-mini falla 'equipo' en:
+  esperado=facturacion obtenido=tecnico     El servicio estuvo caído 2 días la semana pasada; quiero que me compen
+
+json:openai/gpt-4o-mini falla 'equipo' en:
+  esperado=facturacion obtenido=comercial   Me habéis subido el precio sin avisar. Exijo que me devolváis la difer
+  esperado=facturacion obtenido=comercial   Contraté el plan Pro por error, quería el Básico. ¿Me devolvéis la dif
+  esperado=facturacion obtenido=tecnico     El servicio estuvo caído 2 días la semana pasada; quiero que me compen
+
+Detalle guardado en resultados/comparativa_openrouter.json

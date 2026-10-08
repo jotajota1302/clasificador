@@ -1,7 +1,7 @@
 """Paso 3: clasificador de tickets en lote, con latencia por decisión.
 
 Uso:  uv run 03_clasificador.py [tickets.json]
-      $env:TYPESAFE_DEFAULT_MODEL="tev1:0.8b"; uv run 03_clasificador.py   # comparar modelos
+      $env:TYPESAFE_DEFAULT_MODEL="~typesafe/jev-latest"; uv run 03_clasificador.py   # otra versión de Jev
 """
 
 import json
@@ -46,7 +46,7 @@ tabla.add_column("ms", justify="right")
 
 latencias = []
 with TypeSafeClient(timeout=300) as client:
-    # La primera llamada carga el modelo en la GPU; la hacemos aparte para no falsear la media.
+    # La primera llamada abre la conexión; la hacemos aparte para no falsear la media.
     client.system_one(state={"ticket": "hola"}, questions={"x": PREGUNTAS["enfadado"]})
 
     for ticket in tickets:

@@ -1,4 +1,4 @@
-"""Paso 1: llamada HTTP cruda a /v1/systemone, sin SDK.
+"""Paso 1: llamada HTTP cruda a /v1/systemone de OpenRouter (modelo Jev), sin SDK.
 
 Sirve para ver exactamente qué se envía y qué devuelve el modelo.
 Uso:  uv run 01_api_cruda.py
@@ -9,7 +9,7 @@ import time
 
 import httpx
 
-from config import MODELO, OLLAMA_URL
+from config import MODELO, OPENROUTER_URL, cabeceras
 
 peticion = {
     "model": MODELO,
@@ -47,7 +47,7 @@ print(">>> PETICIÓN")
 print(json.dumps(peticion, indent=2, ensure_ascii=False))
 
 t0 = time.perf_counter()
-r = httpx.post(f"{OLLAMA_URL}/v1/systemone", json=peticion, timeout=300)
+r = httpx.post(f"{OPENROUTER_URL}/v1/systemone", headers=cabeceras(), json=peticion, timeout=300)
 ms = (time.perf_counter() - t0) * 1000
 
 print(f"\n>>> RESPUESTA  (HTTP {r.status_code}, {ms:.0f} ms)")

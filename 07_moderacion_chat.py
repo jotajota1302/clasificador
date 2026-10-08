@@ -8,28 +8,26 @@ que llegan a un ritmo fijo, un moderador los procesa en orden y medimos:
   - % de mensajes decididos dentro del presupuesto
   - acierto frente a las etiquetas manuales
 
-nimble además da probabilidades, así que usamos tres zonas:
+Jev además da probabilidades, así que usamos tres zonas:
   P >= 0.9       -> ocultar automáticamente
   0.5 <= P < 0.9 -> ocultar y mandar a un moderador humano
   P < 0.5        -> publicar
 
-Uso:  uv run 07_moderacion_chat.py                 # nimble vs MiniMax Flash
-      uv run 07_moderacion_chat.py --ritmo 3       # 3 mensajes/segundo (satura la RTX 3060)
+Uso:  uv run 07_moderacion_chat.py                 # Jev vs LLM rápido que escribe JSON
+      uv run 07_moderacion_chat.py --ritmo 3       # 3 mensajes/segundo
 """
 
 import argparse
 import json
-import os
 import re
 import time
 from pathlib import Path
 from statistics import quantiles
 
-import httpx
 from rich.console import Console
 from rich.table import Table
 
-from config import MINIMAX_RAPIDO, MINIMAX_URL, MODELO
+from config import LLM_RAPIDO, MODELO, openrouter
 from typesafe_sdk import Noul, TypeSafeClient
 
 PRESUPUESTO_MS = 1000
@@ -46,25 +44,20 @@ ofensivo: insulta, amenaza, acosa o discrimina (las bromas entre amigos y la jer
 spam: publicidad no solicitada, estafa o autopromoción con enlaces."""
 
 
-def moderar_nimble(client):
+def moderar_jev(client):
     def f(m):
         r = client.system_one(state={"usuario": m["usuario"], "mensaje": m["texto"]}, questions=PREGUNTAS)
         return {k: r.nouls[k].noul for k in PREGUNTAS}  # probabilidades
     return f
 
 
-def moderar_minimax(m):
-    r = httpx.post(
-        f"{MINIMAX_URL}/chat/completions", timeout=120,
-        headers={"Authorization": f"Bearer {os.environ['MINIMAX_API_KEY']}"},
-        json={"model": MINIMAX_RAPIDO, "reasoning_split": True, "temperature": 0.01,
-              "messages": [{"role": "system", "content": PROMPT},
-                           {"role": "user", "content": f"{m['usuario']}: {m['texto']}"}]},
-    ).json()
+def moderar_llm(m):
     try:
+        r = openrouter({"model": LLM_RAPIDO, "temperature": 0, "messages": [
+            {"role": "system", "content": PROMPT}, {"role": "user", "content": f"{m['usuario']}: {m['texto']}"}]})
         d = json.loads(re.search(r"\{.*\}", r["choices"][0]["message"]["content"], re.S).group(0))
         return {k: 1.0 if d[k] else 0.0 for k in PREGUNTAS}  # un LLM da un sí/no, no una probabilidad
-    except (AttributeError, KeyError, TypeError, json.JSONDecodeError):
+    except Exception:  # noqa: BLE001  (JSON roto o error de la API)
         return None
 
 
@@ -121,7 +114,7 @@ def resumen(filas):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ritmo", type=float, default=2.0, help="mensajes por segundo")
-    ap.add_argument("--solo-nimble", action="store_true")
+    ap.add_argument("--solo-jev", action="store_true")
     args = ap.parse_args()
 
     console = Console()
@@ -129,11 +122,10 @@ def main():
 
     resultados = {}
     with TypeSafeClient(timeout=300) as client:
-        resultados[f"{MODELO} (local)"] = simular(MODELO, moderar_nimble(client), chat, args.ritmo, console, True)
-    if not args.solo_nimble:
-        console.print(f"\nEvaluando {MINIMAX_RAPIDO} con el mismo chat...")
-        resultados[f"{MINIMAX_RAPIDO} (nube)"] = simular(MINIMAX_RAPIDO, moderar_minimax, chat, args.ritmo,
-                                                         console, False)
+        resultados[f"{MODELO} (decisión)"] = simular(MODELO, moderar_jev(client), chat, args.ritmo, console, True)
+    if not args.solo_jev:
+        console.print(f"\nEvaluando {LLM_RAPIDO} con el mismo chat...")
+        resultados[f"{LLM_RAPIDO} (LLM)"] = simular(LLM_RAPIDO, moderar_llm, chat, args.ritmo, console, False)
 
     t = Table(title=f"{len(chat)} mensajes a {args.ritmo} msg/s · presupuesto {PRESUPUESTO_MS} ms", show_lines=True)
     for col in ["Moderador", "ms/decisión", "Retraso p95", "Retraso máx", "A tiempo",

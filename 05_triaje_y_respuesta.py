@@ -1,8 +1,8 @@
 """Paso 5: flujo completo de soporte.
 
-1. Ollama (modelo de decisión local) clasifica el ticket: gratis, rápido y sin salir de tu máquina.
-2. Si el modelo duda (confianza baja), el ticket va a un humano y no se gasta API.
-3. Si no, MiniMax redacta un borrador de respuesta adaptado a la clasificación.
+1. Jev (modelo de decisión) clasifica el ticket: una llamada, ~0,5 s, fracciones de céntimo.
+2. Si el modelo duda (confianza baja), el ticket va a un humano y no se gasta el LLM grande.
+3. Si no, el LLM grande redacta un borrador de respuesta adaptado a la clasificación.
 
 Uso:  uv run 05_triaje_y_respuesta.py "Me habéis cobrado dos veces, quiero el dinero ya"
 """
@@ -10,7 +10,7 @@ Uso:  uv run 05_triaje_y_respuesta.py "Me habéis cobrado dos veces, quiero el d
 import sys
 import time
 
-from config import MINIMAX_GRANDE, MODELO, minimax_chat
+from config import LLM_GRANDE, MODELO, llm_chat
 from typesafe_sdk import Choice, Noul, Score, TypeSafeClient
 
 UMBRAL_CONFIANZA = 0.5
@@ -49,12 +49,12 @@ enfadado = r.nouls["enfadado"].noul > 0.5
 urgencia = r.scores["urgencia"].score
 
 print(f"Ticket: {ticket}\n")
-print(f"[Ollama/{MODELO} · {ms:.0f} ms]")
+print(f"[{MODELO} · {ms:.0f} ms]")
 print(f"  equipo={equipo.choice} (confianza {equipo.confidence:.2f})  reembolso={reembolso}  "
       f"enfadado={enfadado}  urgencia={urgencia:.2f}/2\n")
 
 if equipo.confidence < UMBRAL_CONFIANZA:
-    print(f"-> Confianza < {UMBRAL_CONFIANZA}: se envía a revisión humana, no se llama a MiniMax.")
+    print(f"-> Confianza < {UMBRAL_CONFIANZA}: se envía a revisión humana, no se llama al LLM grande.")
     sys.exit()
 
 # La clasificación se convierte en instrucciones concretas para el LLM
@@ -68,12 +68,12 @@ if urgencia >= 1.4:
 pautas.append("Máximo 5 frases, en español, tono profesional y cercano. Firma como 'Equipo de soporte'.")
 
 t0 = time.perf_counter()
-borrador = minimax_chat(
-    MINIMAX_GRANDE,
+borrador = llm_chat(
+    LLM_GRANDE,
     [
         {"role": "system", "content": "\n".join(pautas)},
         {"role": "user", "content": ticket},
     ],
 )
-print(f"[MiniMax/{MINIMAX_GRANDE} · {time.perf_counter() - t0:.1f} s] Borrador:\n")
+print(f"[{LLM_GRANDE} · {time.perf_counter() - t0:.1f} s] Borrador:\n")
 print(borrador)
