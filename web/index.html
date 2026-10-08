@@ -16,7 +16,7 @@
   --linea: #D3D9E3;
   --llm: #B86E00;
   --llm-claro: #FFF0D4;
-  --jev: #0B7A75;
+  --jev: #008F82;
   --jev-claro: #D5EFEC;
   --mix: #5B45B0;
   --mix-claro: #E6E0F7;
@@ -30,8 +30,8 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --fondo: #141922; --papel: #1D2430; --tinta: #E8ECF3; --suave: #9AA4B6; --linea: #313B4C;
-    --llm: #F2A43A; --llm-claro: #3A2C14; --jev: #3CC7BF; --jev-claro: #123634;
-    --mix: #A58FF0; --mix-claro: #2B2448; --ok: #6CC070; --mal: #FF7B7B; --duda: #E3C451;
+    --llm: #C07C1A; --llm-claro: #3A2C14; --jev: #17978E; --jev-claro: #123634;
+    --mix: #7F68D8; --mix-claro: #2B2448; --ok: #6CC070; --mal: #FF7B7B; --duda: #E3C451;
     color-scheme: dark;
   }
 }
@@ -151,6 +151,7 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .pista-carrera { background: var(--papel); border-radius: 14px; padding: 16px 18px; display: grid; grid-template-columns: 170px minmax(0, 1fr) auto; gap: 16px; align-items: center; border-left: 6px solid var(--c); }
 .pista-carrera[data-c=llm] { --c: var(--llm); --c-claro: var(--llm-claro); }
 .pista-carrera[data-c=jev] { --c: var(--jev); --c-claro: var(--jev-claro); }
+.pista-carrera[data-c=mix] { --c: var(--mix); --c-claro: var(--mix-claro); }
 .pista-carrera h3 { font-size: 22px; color: var(--c); }
 .pista-carrera .modelo { font-size: 13px; color: var(--suave); overflow-wrap: anywhere; }
 .celdas { display: grid; grid-template-columns: repeat(40, minmax(0, 1fr)); gap: 3px; }
@@ -159,6 +160,8 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .celda.bien { background: var(--c); border-color: var(--c); }
 .celda.parcial { background: var(--c-claro); border-color: var(--c); background-image: linear-gradient(to top, var(--c) 45%, transparent 45%); }
 .celda.mal { background: var(--mal); border-color: var(--mal); opacity: .8; }
+.celda.humano { background: var(--linea); border-color: var(--suave); border-style: dashed; }
+.celda.redactando { background: var(--c-claro); border-color: var(--c); border-width: 2px; animation: latido 1s ease-in-out infinite; }
 .marcador { display: grid; grid-template-columns: repeat(4, auto); gap: 18px; text-align: right; }
 .marcador b { display: block; font-family: var(--display); font-size: 26px; color: var(--c); line-height: 1.1; }
 .marcador span { font-size: 12px; color: var(--suave); }
@@ -182,13 +185,12 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .resumen.visible { display: block; }
 .resumen h3 { font-size: clamp(22px, 2.2vw, 30px); font-weight: 800; letter-spacing: -0.01em; max-width: 40ch; }
 .resumen .titular-sub { color: var(--suave); margin: 6px 0 18px; font-size: 15px; }
-.resumen-cuerpo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(260px, 1.1fr); gap: 22px; }
+.resumen-cuerpo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 28px; }
 .bloque h4 { font-family: var(--display); font-size: 19px; margin: 0 0 10px; }
 .metrica { margin-bottom: 12px; }
 .metrica .nombre { font-size: 14px; color: var(--suave); display: flex; justify-content: space-between; gap: 8px; }
-.metrica .nombre em { font-style: normal; font-weight: 700; color: var(--tinta); white-space: nowrap; }
 .par { display: grid; gap: 3px; margin-top: 4px; }
-.par .linea { display: grid; grid-template-columns: 34px minmax(0, 1fr) 76px; gap: 6px; align-items: center; font-size: 13px; }
+.par .linea { display: grid; grid-template-columns: 74px minmax(0, 1fr) 76px; gap: 6px; align-items: center; font-size: 13px; }
 .par .linea span:last-child { text-align: right; }
 .par .linea.gana span:last-child { font-weight: 700; color: var(--tinta); }
 .par .pista { height: 9px; background: var(--fondo); border-radius: 5px; overflow: hidden; }
@@ -197,12 +199,36 @@ button, select, textarea, input { font: inherit; color: inherit; }
 .par .linea[data-c=jev] .relleno { background: var(--jev); }
 .par .linea[data-c=llm] span:first-child { color: var(--llm); font-weight: 700; }
 .par .linea[data-c=jev] span:first-child { color: var(--jev); font-weight: 700; }
-.mapa svg { width: 100%; height: auto; display: block; }
-.mapa .eje { stroke: var(--linea); stroke-width: 1; }
-.mapa text { fill: var(--suave); font-size: 11px; font-family: var(--texto); }
-.mapa .etq { font-weight: 700; font-size: 13px; }
-.mapa p { font-size: 13px; color: var(--suave); margin: 6px 0 0; }
-@media (max-width: 1100px) { .resumen-cuerpo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.par .linea[data-c=mix] .relleno { background: var(--mix); }
+.par .linea[data-c=mix] span:first-child { color: var(--mix); font-weight: 700; }
+.bloque .nota { font-size: 13px; color: var(--suave); margin: 2px 0 0; }
+.metrica .lectura { font-size: 13px; font-weight: 700; color: var(--tinta); margin-top: 3px; }
+.conclusiones { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linea); }
+.conclusiones h4 { font-family: var(--display); font-size: 22px; margin: 0 0 14px; }
+.conclusiones ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px; }
+.conclusiones li { font-size: 17px; line-height: 1.45; padding-left: 14px; border-left: 4px solid var(--c, var(--linea)); max-width: 62ch; }
+.conclusiones li strong { font-weight: 700; }
+.conclusiones li[data-c=llm] { --c: var(--llm); } .conclusiones li[data-c=jev] { --c: var(--jev); } .conclusiones li[data-c=mix] { --c: var(--mix); }
+.veredicto-final { margin-top: 18px; font-family: var(--display); font-size: clamp(20px, 2vw, 26px); font-weight: 700; line-height: 1.25; max-width: 60ch; }
+@media (max-width: 900px) { .conclusiones ul { grid-template-columns: 1fr; } }
+.reparto-carriles { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linea); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.reparto-carriles h4 { font-family: var(--display); font-size: 22px; margin: 0; }
+.reparto-carriles .ayuda { color: var(--suave); font-size: 15px; margin: 4px 0 14px; }
+.fila-100 { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: 10px; align-items: center; margin-bottom: 10px; }
+.fila-100 > span { font-family: var(--display); font-weight: 700; font-size: 16px; }
+.fila-100[data-c=llm] > span { color: var(--llm); } .fila-100[data-c=jev] > span { color: var(--jev); } .fila-100[data-c=mix] > span { color: var(--mix); }
+.barra-100 { display: flex; height: 38px; border-radius: 8px; overflow: hidden; gap: 2px; background: var(--papel); }
+.barra-100 div { display: grid; place-items: center; font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; min-width: 0; transition: flex-grow .7s cubic-bezier(.2, .8, .2, 1); }
+.leyenda-100 { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--suave); margin-top: 4px; }
+.leyenda-100 i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+/* Tiempos: una sola tonalidad, de claro (rápido) a oscuro (lento) */
+.t0 { background: #DCE8F3; color: #1B2333; } .t1 { background: #A6C3DE; color: #1B2333; }
+.t2 { background: #5E8DB9; color: #fff; } .t3 { background: #2C5A85; color: #fff; }
+/* Resultado: bien / falla una / equipo mal / a una persona */
+.q-bien { background: var(--ok); color: #fff; } .q-parcial { background: #D9A21B; color: #1B2333; }
+.q-mal { background: var(--mal); color: #fff; } .q-humano { background: var(--suave); color: #fff; }
+@media (max-width: 900px) { .reparto-carriles { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .resumen-cuerpo { grid-template-columns: 1fr; } }
 @media (max-width: 560px) { .resumen-cuerpo { grid-template-columns: 1fr; } }
 .aviso { background: var(--mal); color: #fff; border-radius: 10px; padding: 10px 14px; margin: 10px 0; display: none; }
 .aviso.visible { display: block; }
@@ -325,7 +351,7 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
     <div class="carrera-cab">
       <div>
         <h2>Los 40 tickets etiquetados, a la vez</h2>
-        <p>Cada carril procesa los tickets uno detrás de otro, como haría un sistema de soporte. Cada casilla es un ticket comparado con su etiqueta manual.</p>
+        <p>Cada carril procesa los tickets uno detrás de otro, como haría un sistema de soporte. Cada casilla es un ticket comparado con su etiqueta manual. El combinado decide con Jev y, si está claro, el LLM redacta la respuesta en segundo plano; si no, el ticket va a una persona.</p>
       </div>
       <button class="boton" id="correr" type="button">Lanzar la carrera</button>
     </div>
@@ -350,11 +376,23 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
           <div><b id="c-jev-coste">–</b><span>coste total</span></div>
         </div>
       </div>
+      <div class="pista-carrera" data-c="mix">
+        <div><h3>Combinado</h3><div class="modelo" id="c-m-mix"></div></div>
+        <div class="celdas" id="celdas-mix"></div>
+        <div class="marcador">
+          <div><b id="c-mix-hechos">0</b><span>de 40</span></div>
+          <div><b id="c-mix-auto">–</b><span>automatizado</span></div>
+          <div><b id="c-mix-acierto">–</b><span>bien en lo automático</span></div>
+          <div><b id="c-mix-coste">–</b><span>coste total</span></div>
+        </div>
+      </div>
     </div>
     <div class="leyenda">
       <span><i style="background:var(--suave);border-color:var(--suave)"></i>Las tres respuestas bien</span>
       <span><i style="background:linear-gradient(to top,var(--suave) 45%,transparent 45%)"></i>Equipo bien, falla otra</span>
       <span><i style="background:var(--mal);border-color:var(--mal)"></i>Equipo mal o JSON roto</span>
+      <span><i style="background:var(--mix-claro);border-color:var(--mix)"></i>Combinado: redactando la respuesta</span>
+      <span><i style="background:var(--linea);border-style:dashed"></i>Combinado: a una persona</span>
     </div>
 
     <div class="resumen" id="resumen" aria-live="polite">
@@ -364,8 +402,31 @@ footer { color: var(--suave); font-size: 14px; padding: 0 0 40px; }
         <div class="bloque"><h4>Calidad</h4><div id="r-calidad"></div></div>
         <div class="bloque"><h4>Tiempo</h4><div id="r-tiempo"></div></div>
         <div class="bloque"><h4>Coste</h4><div id="r-coste"></div></div>
-        <div class="bloque mapa"><h4>Tiempo frente a calidad</h4><div id="r-mapa"></div>
-          <p>Arriba a la izquierda es mejor: más acierto en menos tiempo. El tamaño del círculo es el coste.</p></div>
+      </div>
+      <div class="reparto-carriles">
+        <div>
+          <h4>¿Cuánto tarda en decidir cada ticket?</h4>
+          <p class="ayuda">Porcentaje de los tickets según lo que tardó la decisión.</p>
+          <div id="r-tiempos"></div>
+          <div class="leyenda-100">
+            <span><i class="t0"></i>Menos de 0,5 s</span><span><i class="t1"></i>0,5 a 1 s</span>
+            <span><i class="t2"></i>1 a 2 s</span><span><i class="t3"></i>Más de 2 s</span>
+          </div>
+        </div>
+        <div>
+          <h4>¿Qué tal lo hace?</h4>
+          <p class="ayuda">Porcentaje de los tickets según el resultado, comparado con la etiqueta manual.</p>
+          <div id="r-resultados"></div>
+          <div class="leyenda-100">
+            <span><i class="q-bien"></i>Las tres respuestas bien</span><span><i class="q-parcial"></i>Equipo bien, falla otra</span>
+            <span><i class="q-mal"></i>Equipo mal o sin respuesta</span><span><i class="q-humano"></i>Enviado a una persona</span>
+          </div>
+        </div>
+      </div>
+      <div class="conclusiones">
+        <h4>Qué significa esta ejecución</h4>
+        <ul id="conclusiones-lista"></ul>
+        <p class="veredicto-final" id="veredicto-final"></p>
       </div>
     </div>
     <div class="automatizar">
@@ -660,7 +721,7 @@ function nuevaCelda(cont) {
 async function correrCarril(tipo, tickets, modelo) {
   const celdas = [...document.querySelectorAll(`#celdas-${tipo} .celda`)];
   let hechos = 0, bien = 0, msTotal = 0, coste = 0;
-  const st = { n: tickets.length, equipo: 0, reembolso: 0, urgencia: 0, rotos: 0, ms: [], inicio: performance.now() };
+  const st = { n: tickets.length, equipo: 0, reembolso: 0, urgencia: 0, rotos: 0, ms: [], detalle: [], inicio: performance.now() };
   for (let i = 0; i < tickets.length; i++) {
     const t = tickets[i];
     celdas[i].className = "celda en-curso";
@@ -690,6 +751,7 @@ async function correrCarril(tipo, tickets, modelo) {
     celdas[i].title = `${t.ticket}\nEsperado: ${t.equipo}, ${t.reembolso ? "reembolso" : "sin reembolso"}, ${nombreUrg(t.urgencia)}` +
       (pred ? `\nObtenido: ${pred.equipo}, ${pred.reembolso ? "reembolso" : "sin reembolso"}, ${nombreUrg(pred.urgencia)}` : "\nSin resultado");
     if (tipo === "jev") filasJev.push({ ok: pred && pred.equipo === t.equipo, conf });
+    st.detalle.push({ ms: st.ms.at(-1), estado: !pred || pred.equipo !== t.equipo ? "mal" : tres ? "bien" : "parcial", info: celdas[i].title });
     $(`#c-${tipo}-hechos`).textContent = hechos;
     $(`#c-${tipo}-acierto`).textContent = pct(bien / hechos);
     $(`#c-${tipo}-ms`).textContent = fmtMs(msTotal / hechos);
@@ -699,79 +761,229 @@ async function correrCarril(tipo, tickets, modelo) {
   return { ...st, tres: bien, coste, duracion: performance.now() - st.inicio };
 }
 
+/* ---------- Carril combinado de la carrera ---------- */
+function limitador(max) {
+  let activos = 0;
+  const cola = [];
+  const siguiente = () => {
+    if (activos >= max || !cola.length) return;
+    activos++;
+    const { fn, ok, ko } = cola.shift();
+    fn().then(ok, ko).finally(() => { activos--; siguiente(); });
+  };
+  return (fn) => new Promise((ok, ko) => { cola.push({ fn, ok, ko }); siguiente(); });
+}
+
+async function correrMix(tickets, umbral) {
+  const celdas = [...document.querySelectorAll("#celdas-mix .celda")];
+  const st = { n: tickets.length, auto: 0, humano: 0, tres: 0, equipo: 0, reembolso: 0, urgencia: 0, rotos: 0,
+    ms: [], detalle: [], coste: 0, costeDecidir: 0, costeRedactar: 0, borradores: 0, inicio: performance.now() };
+  // El navegador solo abre 6 conexiones a la vez por servidor (HTTP/1.1): 3 borradores + LLM + Jev + Jev del
+  // combinado = 6. Con más, las llamadas de los otros carriles esperan en cola y falsean sus tiempos.
+  const enCola = limitador(3);
+  const pendientes = [];
+  const marcador = () => {
+    const hechos = st.auto + st.humano;
+    $("#c-mix-hechos").textContent = hechos;
+    $("#c-mix-auto").textContent = pct(st.auto / hechos);
+    $("#c-mix-acierto").textContent = st.auto ? pct(st.tres / st.auto) : "–";
+    $("#c-mix-coste").textContent = fmtCoste(st.coste);
+    $("#c-mix-coste").title = `Decidir con Jev: ${fmtCoste(st.costeDecidir)}. Redactar ${st.borradores} respuestas: ${fmtCoste(st.costeRedactar)}.`;
+  };
+  for (let i = 0; i < tickets.length; i++) {
+    const t = tickets[i];
+    celdas[i].className = "celda en-curso";
+    const t0 = performance.now();
+    let d;
+    try { d = await llamarJev(t.ticket); } catch (err) { console.warn(err); st.rotos++; st.humano++; celdas[i].className = "celda mal"; marcador(); continue; }
+    st.ms.push(performance.now() - t0);
+    st.coste += (d.respuesta.usage || {}).cost || 0;
+    st.costeDecidir += (d.respuesta.usage || {}).cost || 0;
+    const a = d.respuesta.answers;
+    const pred = decisionJev(a);
+    const desc = `${t.ticket}\nEsperado: ${t.equipo}, ${t.reembolso ? "reembolso" : "sin reembolso"}, ${nombreUrg(t.urgencia)}` +
+      `\nJev: ${pred.equipo}, ${pred.reembolso ? "reembolso" : "sin reembolso"}, ${nombreUrg(pred.urgencia)} (confianza ${a.equipo.confidence.toFixed(2)})`;
+    if (a.equipo.confidence < umbral) {
+      st.humano++;
+      celdas[i].className = "celda humano";
+      celdas[i].title = desc + "\nA una persona: Jev no lo tiene claro.";
+      st.detalle.push({ ms: st.ms.at(-1), estado: "humano", info: celdas[i].title });
+      marcador();
+      continue;
+    }
+    st.auto++;
+    const tres = pred.equipo === t.equipo && pred.reembolso === t.reembolso && pred.urgencia === t.urgencia;
+    if (tres) st.tres++;
+    ["equipo", "reembolso", "urgencia"].forEach((k) => { if (pred[k] === t[k]) st[k]++; });
+    const final = pred.equipo !== t.equipo ? "mal" : tres ? "bien" : "parcial";
+    st.detalle.push({ ms: st.ms.at(-1), estado: final, info: desc });
+    celdas[i].className = "celda redactando";
+    celdas[i].title = desc + "\nRedactando la respuesta…";
+    marcador();
+    pendientes.push(enCola(async () => {
+      let finB = null;
+      try {
+        await leerNDJSON(await post("/api/borrador", { ticket: t.ticket,
+          clasificacion: { equipo: pred.equipo, reembolso: pred.reembolso, urgencia: pred.urgenciaScore } }), (ev) => { if (ev.tipo === "fin") finB = ev; });
+      } catch (err) { console.warn(err); }
+      if (finB) { st.coste += finB.coste; st.costeRedactar += finB.coste; st.borradores++; }
+      celdas[i].className = "celda " + final;
+      celdas[i].title = desc + (finB ? `\nRespuesta: ${finB.texto.replace(/\*\*/g, "").slice(0, 280)}` : "\nNo se pudo redactar la respuesta.");
+      marcador();
+    }));
+  }
+  st.durDecidir = performance.now() - st.inicio;
+  await Promise.all(pendientes);
+  st.duracion = performance.now() - st.inicio;
+  return st;
+}
+
 /* ---------- Resumen de la carrera ---------- */
 const p95 = (xs) => { const o = [...xs].sort((a, b) => a - b); return o[Math.min(o.length - 1, Math.ceil(o.length * 0.95) - 1)]; };
 const media = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
 const veces = (x) => x.toLocaleString("es-ES", { maximumFractionDigits: 1 });
+const fmtDolar = (usd) => "$" + usd.toFixed(usd < 0.1 ? 3 : 2);
+const NOMBRES = { llm: "LLM", jev: "Jev", mix: "Combinado" };
 
-function metrica(nombre, valLLM, valJev, fmt, mayorEsMejor) {
-  const max = Math.max(valLLM, valJev) || 1;
-  const ganaJev = mayorEsMejor ? valJev > valLLM : valJev < valLLM;
-  const ganaLLM = mayorEsMejor ? valLLM > valJev : valLLM < valJev;
-  const lo = Math.min(valLLM, valJev), hi = Math.max(valLLM, valJev);
-  const dif = !mayorEsMejor && lo > 0 && hi / lo >= 1.15 ? `${veces(hi / lo)}× menos con ${ganaJev ? "Jev" : "LLM"}` : "";
-  const linea = (c, v, gana) => `<div class="linea ${gana ? "gana" : ""}" data-c="${c}"><span>${c === "llm" ? "LLM" : "Jev"}</span>
+// series: [["llm", valor], ["jev", valor], ["mix", valor]]; un valor null no se pinta.
+// tipo decide cómo se lee la diferencia: "pct" (puntos), "tiempo" (veces más rápido), "coste" (veces más barato),
+// "conteo" (unidades de menos). Siempre se compara el mejor con el LLM, que es la referencia de la demo.
+function metrica(nombre, series, fmt, mayorEsMejor, tipo) {
+  const vals = series.filter(([, v]) => v != null);
+  const nums = vals.map(([, v]) => v);
+  const max = Math.max(...nums) || 1;
+  const mejor = mayorEsMejor ? Math.max(...nums) : Math.min(...nums);
+  const ganadores = vals.filter(([, v]) => v === mejor).map(([c]) => c);
+  const refLLM = (vals.find(([c]) => c === "llm") || [])[1];
+  let lectura = "";
+  const comparable = ["pct", "tiempo", "coste", "conteo"].includes(tipo);
+  if (comparable && !ganadores.includes("llm") && refLLM != null && mejor !== refLLM) {
+    const quien = ganadores.map((c) => NOMBRES[c]).join(" y ");
+    if (tipo === "pct") lectura = `${quien}: ${Math.round((mejor - refLLM) * 100)} puntos más que el LLM`;
+    if (tipo === "tiempo" && mejor > 0) lectura = `${quien}: ${veces(refLLM / mejor)} veces más rápido que el LLM`;
+    if (tipo === "coste" && mejor > 0) lectura = `${quien}: ${veces(refLLM / mejor)} veces más barato que el LLM`;
+    if (tipo === "conteo") lectura = `${quien}: ${refLLM - mejor} menos que el LLM`;
+  } else if (comparable && ganadores.length === 1 && ganadores[0] === "llm" && vals.length > 1) {
+    lectura = "Aquí gana el LLM";
+  } else if (comparable && ganadores.length > 1 && ganadores.includes("llm")) {
+    lectura = "Empate con el LLM";
+  }
+  const linea = ([c, v]) => `<div class="linea ${v === mejor && ganadores.length < vals.length ? "gana" : ""}" data-c="${c}"><span>${NOMBRES[c]}</span>
     <div class="pista"><div class="relleno" data-w="${(v / max) * 100}"></div></div><span>${fmt(v)}</span></div>`;
-  return `<div class="metrica"><div class="nombre"><span>${nombre}</span><em>${dif}</em></div>
-    <div class="par">${linea("llm", valLLM, ganaLLM)}${linea("jev", valJev, ganaJev)}</div></div>`;
+  return `<div class="metrica"><div class="nombre"><span>${nombre}</span></div>
+    <div class="par">${vals.map(linea).join("")}</div>${lectura ? `<div class="lectura">${lectura}</div>` : ""}</div>`;
 }
 
-function mapa(L, J) {
-  const W = 300, H = 210, m = { l: 40, r: 14, t: 14, b: 34 };
-  const xMax = Math.max(media(L.ms), media(J.ms)) * 1.25;
-  const x = (v) => m.l + (v / xMax) * (W - m.l - m.r);
-  const y = (v) => H - m.b - v * (H - m.t - m.b);
-  const cMax = Math.max(L.coste, J.coste) || 1;
-  const r = (c) => 8 + 22 * Math.sqrt(c / cMax);
-  const punto = (st, nombre, color) => {
-    const cx = x(media(st.ms)), cy = y(st.tres / st.n), rr = r(st.coste);
-    return `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2"/>
-      <text class="etq" x="${cx}" y="${cy - rr - 6}" text-anchor="middle" style="fill:${color}">${nombre}</text>`;
+function pintarReparto100(carriles) {
+  // carriles: [{ c, detalle: [{ ms, estado }] }]
+  const tramos = [[0, 500, "t0", "menos de 0,5 s"], [500, 1000, "t1", "entre 0,5 y 1 s"], [1000, 2000, "t2", "entre 1 y 2 s"], [2000, Infinity, "t3", "más de 2 s"]];
+  const estados = [["bien", "q-bien", "con las tres respuestas bien"], ["parcial", "q-parcial", "con el equipo bien pero otra respuesta mal"],
+    ["mal", "q-mal", "con el equipo mal o sin respuesta"], ["humano", "q-humano", "enviados a una persona"]];
+  const barra = (c, segmentos) => {
+    const n = segmentos.reduce((a, sg) => a + sg.k, 0) || 1;
+    return `<div class="fila-100" data-c="${c}"><span>${NOMBRES[c]}</span><div class="barra-100">${segmentos.filter((sg) => sg.k).map((sg) => {
+      const pc = Math.round((sg.k / n) * 100);
+      return `<div class="${sg.cls}" style="flex-grow:${sg.k}" title="${NOMBRES[c]}: ${sg.k} de ${n} tickets ${sg.txt} (${pc} %)">${pc >= 8 ? pc + " %" : ""}</div>`;
+    }).join("")}</div></div>`;
   };
-  const marcasY = [0, 0.25, 0.5, 0.75, 1].map((v) => `<line class="eje" x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" ${v ? 'stroke-dasharray="2 3"' : ""}/>
-    <text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v * 100}%</text>`).join("");
-  const pasoX = xMax > 3000 ? 1000 : 500;
-  const marcasX = Array.from({ length: Math.floor(xMax / pasoX) + 1 }, (_, i) => i * pasoX)
-    .map((v) => `<text x="${x(v)}" y="${H - m.b + 16}" text-anchor="middle">${veces(v / 1000)} s</text>`).join("");
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Tiempo medio por ticket frente a acierto">
-    ${marcasY}${marcasX}
-    <text x="${(m.l + W - m.r) / 2}" y="${H - 4}" text-anchor="middle">tiempo medio por ticket</text>
-    ${punto(L, "LLM", "var(--llm)")}${punto(J, "Jev", "var(--jev)")}</svg>`;
+  $("#r-tiempos").innerHTML = carriles.map((k) => barra(k.c, tramos.map(([a, b, cls, txt]) => ({
+    cls, txt, k: k.detalle.filter((d) => d.ms >= a && d.ms < b).length })))).join("");
+  $("#r-resultados").innerHTML = carriles.map((k) => barra(k.c, estados.map(([e, cls, txt]) => ({
+    cls, txt, k: k.detalle.filter((d) => d.estado === e).length })))).join("");
 }
 
-function pintarResumen(L, J) {
-  const msL = media(L.ms), msJ = media(J.ms);
+function pintarResumen(L, J, M) {
+  const msL = media(L.ms), msJ = media(J.ms), msM = M.ms.length ? media(M.ms) : null;
   const partes = [];
   if (msJ < msL) partes.push(`${veces(msL / msJ)} veces más rápido`);
   if (J.coste > 0 && J.coste < L.coste) partes.push(`${veces(L.coste / J.coste)} veces más barato`);
   const puntos = Math.round((J.tres / J.n - L.tres / L.n) * 100);
   if (puntos > 0) partes.push(`ha acertado ${puntos} puntos más`);
   $("#resumen-titular").textContent = partes.length
-    ? `Jev ha sido ${partes.slice(0, -1).join(", ")}${partes.length > 1 ? " y " : ""}${partes.at(-1)}.`
+    ? `Jev ha sido ${partes.slice(0, -1).join(", ")}${partes.length > 1 ? " y " : ""}${partes.at(-1)} que el LLM.`
     : "En esta carrera el LLM no ha salido peor que Jev.";
-  $("#resumen-sub").textContent = `${L.n} tickets etiquetados a mano. LLM: ${$("#c-m-llm").textContent}. Jev: ${CFG.jev}. ` +
-    `Jev terminó en ${veces(J.duracion / 1000)} s y el LLM en ${veces(L.duracion / 1000)} s.`;
+  const erroresM = M.auto - M.tres;
+  $("#resumen-sub").textContent = `El combinado automatizó ${pct(M.auto / M.n)} de los tickets, mandó ${M.humano} a una persona ` +
+    `y redactó ${M.borradores} respuestas; solo ${erroresM} ${erroresM === 1 ? "salió" : "salieron"} con algún error, frente a ${L.n - L.tres} del LLM. ` +
+    `LLM: ${$("#c-m-llm").textContent}. Jev: ${CFG.jev}. Borradores: ${CFG.llm_borrador}.`;
 
   const pc = (v) => Math.round(v * 100) + " %";
+  const sobre = (st, k) => (st.auto ? st[k] / st.auto : null);
   $("#r-calidad").innerHTML =
-    metrica("Las 3 respuestas bien", L.tres / L.n, J.tres / J.n, pc, true) +
-    metrica("Equipo", L.equipo / L.n, J.equipo / J.n, pc, true) +
-    metrica("Reembolso", L.reembolso / L.n, J.reembolso / J.n, pc, true) +
-    metrica("Urgencia", L.urgencia / L.n, J.urgencia / J.n, pc, true) +
-    metrica("Respuestas inservibles", L.rotos, J.rotos, (v) => String(v), false);
+    metrica("Tickets resueltos con algún error", [["llm", L.n - L.tres], ["jev", J.n - J.tres], ["mix", erroresM]], String, false, "conteo") +
+    metrica("Las 3 respuestas bien", [["llm", L.tres / L.n], ["jev", J.tres / J.n], ["mix", sobre(M, "tres")]], pc, true, "pct") +
+    metrica("Equipo", [["llm", L.equipo / L.n], ["jev", J.equipo / J.n], ["mix", sobre(M, "equipo")]], pc, true, "pct") +
+    metrica("Urgencia", [["llm", L.urgencia / L.n], ["jev", J.urgencia / J.n], ["mix", sobre(M, "urgencia")]], pc, true, "pct") +
+    metrica("Enviados a una persona", [["llm", 0], ["jev", 0], ["mix", M.humano]], String, false, "info") +
+    `<p class="nota">Combinado: porcentajes sobre lo que automatiza (${M.auto} de ${M.n}). LLM y Jev solos deciden los ${L.n} a ciegas.</p>`;
   $("#r-tiempo").innerHTML =
-    metrica("Media por ticket", msL, msJ, (v) => fmtMs(v) + " ms", false) +
-    metrica("Peor 5 % (p95)", p95(L.ms), p95(J.ms), (v) => fmtMs(v) + " ms", false) +
-    metrica(`Los ${L.n} tickets`, L.duracion, J.duracion, (v) => veces(v / 1000) + " s", false);
+    metrica("Media hasta decidir", [["llm", msL], ["jev", msJ], ["mix", msM]], (v) => fmtMs(v) + " ms", false, "tiempo") +
+    metrica("El 5 % más lento (p95)", [["llm", p95(L.ms)], ["jev", p95(J.ms)], ["mix", M.ms.length ? p95(M.ms) : null]], (v) => fmtMs(v) + " ms", false, "tiempo") +
+    metrica(`Los ${L.n} tickets`, [["llm", L.duracion], ["jev", J.duracion], ["mix", M.duracion]], (v) => veces(v / 1000) + " s", false, "info") +
+    `<p class="nota">El combinado decidió todo en ${veces(M.durDecidir / 1000)} s; el resto es redactar ${M.borradores} respuestas en paralelo.</p>`;
   $("#r-coste").innerHTML =
-    metrica(`Los ${L.n} tickets`, L.coste, J.coste, fmtCoste, false) +
-    metrica("Por 1.000 tickets", L.coste / L.n, J.coste / J.n, fmtMil, false);
-  $("#r-mapa").innerHTML = mapa(L, J);
+    metrica("Clasificar 1.000 tickets", [["llm", L.coste / L.n * 1000], ["jev", J.coste / J.n * 1000]], fmtDolar, false, "coste") +
+    (M.borradores
+      ? metrica(`Clasificar y responder los ${L.n} tickets`, [["llm", L.coste + (M.costeRedactar / M.borradores) * L.n], ["mix", M.coste]], fmtCoste, false, "coste") +
+        `<p class="nota">LLM: estimado, clasificando con ${$("#c-m-llm").textContent} y redactando las ${L.n} respuestas al coste medio medido aquí ` +
+        `(${fmtCoste(M.costeRedactar / M.borradores)} por respuesta). Combinado: real, ${fmtCoste(M.costeDecidir)} en decidir con Jev y ` +
+        `${fmtCoste(M.costeRedactar)} en redactar ${M.borradores} respuestas con ${CFG.llm_borrador}; ${M.humano === 1 ? "el ticket dudoso no se redacta" : `los ${M.humano} dudosos no se redactan`}.</p>`
+      : "");
+  pintarReparto100([{ c: "llm", detalle: L.detalle }, { c: "jev", detalle: J.detalle }, { c: "mix", detalle: M.detalle }]);
+  pintarConclusiones(L, J, M);
 
   const caja = $("#resumen");
   caja.classList.add("visible");
   animarBarras(caja);
   caja.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+}
+
+function pintarConclusiones(L, J, M) {
+  const msL = media(L.ms), msJ = media(J.ms);
+  const min = (ms) => (ms * 1000) / 60000;  // 1.000 tickets de uno en uno, en minutos
+  const fmtMin = (m) => (m < 1 ? `${veces(m * 60)} segundos` : `${veces(m)} minutos`);
+  const cL = (L.coste / L.n) * 1000, cJ = (J.coste / J.n) * 1000;
+  const aL = L.tres / L.n, aJ = J.tres / J.n;
+  const errL = Math.round(((L.n - L.tres) / L.n) * 100);
+  const errM = M.auto ? Math.round(((M.auto - M.tres) / M.auto) * 100) : null;
+  const items = [];
+
+  // Velocidad
+  if (msJ < msL) {
+    items.push(["jev", `<strong>Velocidad.</strong> Jev decide un ticket en ${veces(msJ / 1000)} s y el LLM en ${veces(msL / 1000)} s. ` +
+      `Con 1.000 tickets, uno detrás de otro: <strong>${fmtMin(min(msJ))} frente a ${fmtMin(min(msL))}</strong>, ${fmtMin(min(msL) - min(msJ))} menos.`]);
+  } else {
+    items.push(["llm", `<strong>Velocidad.</strong> En esta ejecución el LLM ha sido más rápido: ${veces(msL / 1000)} s por ticket frente a ${veces(msJ / 1000)} s de Jev.`]);
+  }
+
+  // Coste
+  if (cJ < cL) {
+    items.push(["jev", `<strong>Coste.</strong> Clasificar 1.000 tickets cuesta <strong>${fmtDolar(cJ)} con Jev y ${fmtDolar(cL)} con el LLM</strong>: ` +
+      `un ${Math.round((1 - cJ / cL) * 100)} % menos. A un millón de tickets, ${fmtDolar(cJ * 1000)} frente a ${fmtDolar(cL * 1000)}.`]);
+  } else {
+    items.push(["llm", `<strong>Coste.</strong> En esta ejecución clasificar con el LLM ha salido más barato: ${fmtDolar(cL)} por 1.000 tickets frente a ${fmtDolar(cJ)} con Jev.`]);
+  }
+
+  // Calidad
+  const puntos = Math.round((aJ - aL) * 100);
+  items.push([puntos >= 0 ? "jev" : "llm", `<strong>Calidad.</strong> Jev acierta las tres respuestas en el ${pct(aJ)} de los tickets y el LLM en el ${pct(aL)}` +
+    (puntos > 0 ? `: <strong>${puntos} puntos más con Jev</strong>.` : puntos < 0 ? `: <strong>${-puntos} puntos más con el LLM</strong>.` : ": empatan.") +
+    ` Además, Jev dice cuándo duda; el LLM responde igual de seguro cuando se equivoca.`]);
+
+  // Combinado
+  if (M.auto) {
+    items.push(["mix", `<strong>Combinado.</strong> Automatiza el ${pct(M.auto / M.n)} de los tickets y manda ${M.humano} a una persona. ` +
+      `De cada 100 tickets que resuelve solo, <strong>${errM} llevan algún error, frente a ${errL} del LLM</strong> decidiendo a ciegas. ` +
+      `Casi todo su coste es escribir: de ${fmtCoste(M.coste)}, ${fmtCoste(M.costeRedactar)} son las ${M.borradores} respuestas redactadas y solo ${fmtCoste(M.costeDecidir)} las decisiones de Jev.`]);
+  }
+
+  $("#conclusiones-lista").innerHTML = items.map(([c, t]) => `<li data-c="${c}">${t}</li>`).join("");
+
+  const jevMejor = msJ < msL && cJ <= cL && aJ >= aL;
+  const mixMejor = M.auto && errM < errL;
+  $("#veredicto-final").textContent = jevMejor
+    ? `Para decidir, Jev es más rápido, más barato y acierta más. ${mixMejor ? "Lo mejor es combinarlos: Jev decide, el LLM solo escribe cuando la decisión está clara y lo dudoso va a una persona." : "El LLM queda para lo que hace bien: escribir."}`
+    : `En esta ejecución Jev no gana en todo: ${[msJ >= msL ? "velocidad" : "", cJ > cL ? "coste" : "", aJ < aL ? "acierto" : ""].filter(Boolean).join(", ")} a favor del LLM. Conviene repetir la carrera antes de sacar conclusiones.`;
 }
 
 function pintarReparto() {
@@ -795,17 +1007,27 @@ $("#correr").addEventListener("click", async () => {
   boton.disabled = true; boton.textContent = "En carrera…";
   const modelo = $("#modelo-llm").value;
   $("#c-m-llm").textContent = modelo;
-  for (const tipo of ["llm", "jev"]) {
+  const umbral = Number($("#umbral-c").value);
+  $("#c-m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}, confianza ≥ ${umbral.toFixed(2)}`;
+  for (const tipo of ["llm", "jev", "mix"]) {
     const cont = $(`#celdas-${tipo}`);
     cont.innerHTML = "";
     CFG.tickets.forEach(() => nuevaCelda(cont));
-    ["hechos", "acierto", "ms", "coste"].forEach((k) => ($(`#c-${tipo}-${k}`).textContent = k === "hechos" ? "0" : "–"));
   }
+  ["llm", "jev"].forEach((tipo) => ["hechos", "acierto", "ms", "coste"].forEach((k) => ($(`#c-${tipo}-${k}`).textContent = k === "hechos" ? "0" : "–")));
+  ["hechos", "auto", "acierto", "coste"].forEach((k) => ($(`#c-mix-${k}`).textContent = k === "hechos" ? "0" : "–"));
   filasJev.length = 0;
   $("#resumen").classList.remove("visible");
-  const [stLLM, stJev] = await Promise.all([correrCarril("llm", CFG.tickets, modelo), correrCarril("jev", CFG.tickets)]);
-  pintarResumen(stLLM, stJev);
-  boton.disabled = false; boton.textContent = "Repetir la carrera";
+  try {
+    const [stLLM, stJev, stMix] = await Promise.all([
+      correrCarril("llm", CFG.tickets, modelo), correrCarril("jev", CFG.tickets), correrMix(CFG.tickets, umbral)]);
+    pintarResumen(stLLM, stJev, stMix);
+  } catch (err) {
+    console.error(err);
+    avisar("No se pudo completar el resumen de la carrera: " + err.message);
+  } finally {
+    boton.disabled = false; boton.textContent = "Repetir la carrera";
+  }
 });
 
 /* ---------- Arranque ---------- */
@@ -822,7 +1044,8 @@ $("#correr").addEventListener("click", async () => {
   $("#m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}`;
   $("#c-m-llm").textContent = CFG.llms[0];
   $("#c-m-jev").textContent = CFG.jev;
-  ["llm", "jev"].forEach((t) => CFG.tickets.forEach(() => nuevaCelda($(`#celdas-${t}`))));
+  $("#c-m-mix").textContent = `${CFG.jev} + ${CFG.llm_borrador}`;
+  ["llm", "jev", "mix"].forEach((t) => CFG.tickets.forEach(() => nuevaCelda($(`#celdas-${t}`))));
   $("#pie").textContent = `Todo en vivo contra OpenRouter. Decisiones: ${CFG.jev}. Generación: ${CFG.llms.join(" y ")}.`;
 
   const elegidos = [0, 1, 2, 5, 9, 14, 22, 31].filter((i) => i < CFG.tickets.length).map((i) => CFG.tickets[i]);

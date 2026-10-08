@@ -126,8 +126,11 @@ y hace de proxy a OpenRouter, así la clave no llega al navegador. Todo es en vi
   el LLM grande redacta el borrador (si no, va a una persona). Cada paso muestra su
   tiempo y cada carril sus ms, tokens y coste por 1.000 tickets. Con un ticket del
   dataset se marca qué coincide con la etiqueta manual.
-- **La carrera**: los 40 tickets etiquetados, LLM y Jev a la vez, con acierto, ms y
-  coste en directo, y un deslizador que muestra cuánto se automatiza con cada umbral.
+- **La carrera**: los 40 tickets etiquetados, LLM, Jev y el flujo combinado a la vez,
+  con acierto, ms y coste en directo, y un deslizador que muestra cuánto se automatiza
+  con cada umbral. En el combinado, Jev decide y, si la confianza supera el umbral, el
+  LLM grande redacta la respuesta en segundo plano (3 a la vez, para no agotar las 6
+  conexiones simultáneas que el navegador permite por servidor); si no, va a una persona.
   Al terminar aparece un resumen de calidad, tiempo y coste (con cuántas veces más
   rápido y más barato) y un gráfico de tiempo frente a acierto.
 
