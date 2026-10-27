@@ -22,7 +22,7 @@
   </header>
 
   <h1>Un modelo para cada etapa del workflow</h1>
-  <p class="lead">Elige uno de los workflows de fábrica de ORCHIDIA, o carga el tuyo en markdown, y describe el caso. Jev clasifica cada etapa por separado con el texto real de su sección, todas en paralelo, y la política asigna a cada una su modelo y su esfuerzo. Al final se compara con usar un único modelo en todo el flujo y se genera el bloque <code>engine:</code> para pegarlo en el workflow.</p>
+  <p class="lead">Elige uno de los workflows de fábrica de ORCHIDIA, o carga el tuyo en markdown, y si quieres describe el caso. Jev clasifica cada etapa por separado con el texto real de su sección, todas en paralelo, y la política asigna a cada una su modelo y su esfuerzo. Al final se compara con usar un único modelo en todo el flujo y se genera el bloque <code>engine:</code> para pegarlo en el workflow.</p>
 
   <div class="rejilla">
     <section class="tarjeta">
@@ -36,7 +36,7 @@
       <div style="height:10px"></div>
       <label class="etiqueta" for="caso">Caso <small>(opcional)</small></label>
       <textarea id="caso" placeholder="Opcional. Sin caso, cada etapa se clasifica solo por lo que hace. Con caso (qué hay que hacer, en qué sistema), la asignación se ajusta a él: un cambio de texto y una migración de pagos no piden el mismo modelo."></textarea>
-      <div class="ejemplos" id="ejemplos"></div>
+      <div style="height:12px"></div>
       <div class="acciones">
         <button class="boton" id="lanzar">Asignar modelos</button>
         <span class="estado" id="estado"></span>
@@ -90,6 +90,7 @@ async function cargarIndice() {
   try {
     indice = await (await fetch("workflows/catalogo.json")).json();
   } catch { indice = []; }
+  indice = indice.filter((w) => !w.id.startsWith("autotest")); // pruebas internas de ORCHIDIA, no trabajo real
   $("workflow").innerHTML = indice.map((w) => `<option value="${esc(w.fichero)}">${esc(w.nombre)} (${w.etapas.length} etapas)</option>`).join("")
     + `<option value="${PROPIO}">Mi workflow en markdown…</option>`;
   $("workflow").value = indice.find((w) => w.id === "desarrollo-evolutivo")?.fichero || $("workflow").value;
@@ -112,23 +113,7 @@ async function actualizarResumen() {
     : `${esc(wf.descripcion || wf.nombre)}<br>Etapas: ${wf.etapas.map((e) => esc(e.label)).join(" → ")}`
       + (wf.etapas.length > MAX_ETAPAS ? ` <span class="error">(solo se clasifican las ${MAX_ETAPAS} primeras)</span>` : "");
 }
-const EJEMPLOS = {
-  "Paginación": "Añadir paginación y filtros por estado al listado de incidencias (backend FastAPI + frontend Next.js). Hay tests existentes de la API.",
-  "Migración pagos": "Cambiar la pasarela de pagos de Redsys a Stripe en el monolito de facturación, manteniendo los cobros recurrentes ya existentes y sin cortar el servicio.",
-  "Texto de botón": "Cambiar el texto del botón 'Enviar' por 'Guardar cambios' en el formulario de perfil.",
-  "Sistema legado": "Proyecto Java 8 de gestión de expedientes con 15 años, sin documentación y con un Oracle con procedimientos almacenados.",
-};
-
 function $(id) { return document.getElementById(id); }
-$("ejemplos").innerHTML = Object.keys(EJEMPLOS).map((k) => `<button type="button">${esc(k)}</button>`).join("");
-$("ejemplos").addEventListener("click", async (ev) => {
-  const b = ev.target.closest("button"); if (!b) return;
-  $("caso").value = EJEMPLOS[b.textContent];
-  const objetivo = b.textContent === "Sistema legado" ? "descubrimiento-proyecto" : "desarrollo-evolutivo";
-  const f = indice.find((w) => w.id === objetivo);
-  if (f) { $("workflow").value = f.fichero; await actualizarResumen(); }
-  $("lanzar").click();
-});
 $("workflow").addEventListener("change", actualizarResumen);
 $("md").addEventListener("input", actualizarResumen);
 $("cargar").addEventListener("click", () => $("fichero").click());
