@@ -9,6 +9,28 @@
 const URL_JEV = "https://openrouter.ai/api/v1/systemone";
 const MODELO = process.env.JEV_MODEL || "typesafe/jev-1.13";
 
+// Frenos contra el uso masivo (la demo es pública y la paga la clave de OpenRouter).
+// El tope de verdad es el límite de crédito de la clave en OpenRouter; esto evita
+// que alguien lo agote en un rato con un script.
+const MAX_ITEMS = 12;                 // llamadas a Jev por petición (un workflow largo)
+const MAX_CHARS_ITEM = 6000;          // tamaño del state de cada llamada
+const VENTANA_MS = 10 * 60 * 1000;    // ventana del límite por IP
+const MAX_PETICIONES = Number(process.env.MAX_PETICIONES_IP || 20); // por IP y ventana
+const vistas = new Map();             // ip -> [instantes]; vive mientras viva la instancia
+
+function limitePorIp(req) {
+  const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "?").split(",")[0].trim();
+  const ahora = Date.now();
+  const recientes = (vistas.get(ip) || []).filter((t) => ahora - t < VENTANA_MS);
+  if (recientes.length >= MAX_PETICIONES) {
+    return Math.ceil((VENTANA_MS - (ahora - recientes[0])) / 1000);
+  }
+  recientes.push(ahora);
+  vistas.set(ip, recientes);
+  if (vistas.size > 5000) vistas.clear(); // que no crezca sin fin
+  return 0;
+}
+
 export const PREGUNTAS = {
   complejidad: {
     type: "score",
@@ -75,9 +97,25 @@ export default async function handler(req, res) {
   const clave = process.env.OPENROUTER_API_KEY;
   if (!clave) return res.status(500).json({ error: "Falta OPENROUTER_API_KEY en el entorno" });
 
-  const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
-  const items = Array.isArray(body.items) ? body.items.slice(0, 12) : [];
+  const codigo = process.env.DEMO_CODIGO; // opcional: si está, hay que mandarlo
+  if (codigo && req.headers["x-demo-codigo"] !== codigo) {
+    return res.status(401).json({ error: "Código de demo incorrecto", pideCodigo: true });
+  }
+
+  const espera = limitePorIp(req);
+  if (espera) {
+    res.setHeader("Retry-After", String(espera));
+    return res.status(429).json({ error: `Demasiadas clasificaciones seguidas: prueba otra vez en ${Math.ceil(espera / 60)} min` });
+  }
+
+  let body;
+  try { body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {}; }
+  catch { return res.status(400).json({ error: "JSON no válido" }); }
+  const items = Array.isArray(body.items) ? body.items.slice(0, MAX_ITEMS) : [];
   if (!items.length) return res.status(400).json({ error: "Envía items: [{ id, state }]" });
+  if (items.some((it) => JSON.stringify(it.state ?? "").length > MAX_CHARS_ITEM)) {
+    return res.status(413).json({ error: `Cada tarea o etapa admite como mucho ${MAX_CHARS_ITEM} caracteres` });
+  }
 
   try {
     const salida = await Promise.all(

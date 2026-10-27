@@ -112,9 +112,21 @@ function explicar(s, requerido, elegida, candidatas, dudoso, w) {
 let ultima = null; // última llamada real, para la ayuda
 let leerPrioridad = () => ({ ...PRESETS.equilibrio });
 
-export async function llamarJev(items) {
-  const r = await fetch("/api/clasificar", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ items }) });
+// Código de demo: solo se pide si la función tiene DEMO_CODIGO configurado
+const leerCodigo = () => { try { return localStorage.getItem("demo-codigo") || ""; } catch { return ""; } };
+const guardarCodigo = (c) => { try { localStorage.setItem("demo-codigo", c); } catch {} };
+
+export async function llamarJev(items, reintento = false) {
+  const r = await fetch("/api/clasificar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Demo-Codigo": leerCodigo() },
+    body: JSON.stringify({ items }),
+  });
   const d = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
+  if (d.pideCodigo && !reintento) {
+    const c = window.prompt("Esta demo pide un código de acceso. Pídeselo a quien te pasó el enlace:");
+    if (c) { guardarCodigo(c.trim()); return llamarJev(items, true); }
+  }
   if (!r.ok || d.error) throw new Error(d.error || `HTTP ${r.status}`);
   ultima = { enviados: items, d };
   return d;
