@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selector de modelos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="comun.css">
+</head>
+<body>
+<div class="envoltura">
+  <header class="cabecera">
+    <div class="marca">Selector de modelos <small>Jev clasifica · la política decide · catálogo Axet</small></div>
+    <nav class="pestanas"><a href="./" aria-current="page">Una tarea</a><a href="flujo.html">Workflow por etapas</a></nav>
+  </header>
+
+  <h1>¿Qué modelo merece esta tarea?</h1>
+  <p class="lead">Describe la tarea. Jev, el modelo de decisión, la lee en una sola llamada y devuelve señales con probabilidades: complejidad, riesgo, tipo, razonamiento y contexto. Con esas señales y tu prioridad entre coste, calidad y tiempo, la política elige el modelo de Axet y el esfuerzo.</p>
+
+  <div class="rejilla">
+    <section class="tarjeta">
+      <h2>La tarea</h2>
+      <textarea id="tarea" placeholder="Ej.: Añadir paginación al listado de incidencias del backend FastAPI, con tests."></textarea>
+      <div class="ejemplos" id="ejemplos"></div>
+      <div class="acciones">
+        <button class="boton" id="lanzar">Clasificar</button>
+        <span class="estado" id="estado"></span>
+      </div>
+    </section>
+    <section class="tarjeta">
+      <h2>Prioridad</h2>
+      <div id="prioridad"></div>
+      <p class="nota">Al mover la prioridad se recalcula al instante, sin volver a llamar a Jev.</p>
+    </section>
+  </div>
+
+  <div id="resultado" class="oculto">
+    <section class="tarjeta seccion">
+      <div class="veredicto" id="veredicto"></div>
+      <p class="porque" id="porque"></p>
+      <div class="modelos" id="modelos"></div>
+      <p class="nota">Las tarjetas atenuadas no llegan al nivel que pide la tarea. El coste y el tiempo son estimaciones con perfiles de tokens supuestos por tipo de tarea.</p>
+    </section>
+    <section class="tarjeta seccion">
+      <h2>Lo que ha visto Jev</h2>
+      <div class="senales" id="senales"></div>
+      <p class="nota" id="meta"></p>
+    </section>
+  </div>
+
+  <footer>POC: precios de la tabla de referencia de Axet (USD por millón de tokens). La capacidad, la velocidad y el consumo de tokens de cada modelo son supuestos para enseñar el concepto.</footer>
+</div>
+
+<script type="module">
+import { decidir, llamarJev, montarPrioridad, chipModelo, usd, dur, esc, txtEsfuerzo, ETIQUETA_TIPO } from "./comun.js";
+
+const EJEMPLOS = [
+  "Renombrar la variable 'usr' a 'usuario' en el módulo de login y actualizar los imports.",
+  "Añadir paginación al endpoint GET /api/incidencias del backend FastAPI, con tests.",
+  "Hay una fuga de memoria intermitente en producción en el worker de colas; nadie sabe desde cuándo ni por qué.",
+  "Diseñar la arquitectura para pasar el monolito de facturación a eventos sin cortar el servicio.",
+  "Revisar el MR que cambia la validación de permisos del API de pagos.",
+  "Redactar el README del módulo de exportación a partir del código existente.",
+];
+const $ = (id) => document.getElementById(id);
+$("ejemplos").innerHTML = EJEMPLOS.map((e, i) => `<button type="button" data-i="${i}">${esc(e.split(" ").slice(0, 4).join(" "))}…</button>`).join("");
+$("ejemplos").addEventListener("click", (ev) => { const b = ev.target.closest("button"); if (b) { $("tarea").value = EJEMPLOS[b.dataset.i]; $("lanzar").click(); } });
+
+let respuesta = null;
+const prioridad = montarPrioridad($("prioridad"), () => respuesta && pintar());
+
+$("lanzar").addEventListener("click", async () => {
+  const tarea = $("tarea").value.trim();
+  if (!tarea) { $("tarea").focus(); return; }
+  $("lanzar").disabled = true; $("estado").className = "estado"; $("estado").textContent = "Preguntando a Jev…";
+  try {
+    const d = await llamarJev([{ id: "tarea", state: { tarea } }]);
+    respuesta = { ...d.items[0], modeloJev: d.modelo };
+    $("estado").textContent = "";
+    pintar();
+  } catch (e) {
+    $("estado").className = "estado error"; $("estado").textContent = `Error: ${e.message}`;
+  } finally { $("lanzar").disabled = false; }
+});
+
+function pintar() {
+  const r = decidir(respuesta.answers, prioridad());
+  const e = r.elegida;
+  $("resultado").classList.remove("oculto");
+  $("veredicto").innerHTML = `Usa ${chipModelo(e.modelo)} con esfuerzo <b>${txtEsfuerzo(r.esfuerzo)}</b> · ${usd(e.coste)} · ~${dur(e.segundos)}`;
+  $("porque").textContent = r.porQue;
+  $("modelos").innerHTML = r.opciones.map((o) => `
+    <div class="modelo ${o.elegida ? "elegida" : ""} ${o.llega ? "" : "no-llega"}" style="--c:var(${o.modelo.var})">
+      ${o.elegida ? '<span class="sello">elegido</span>' : o.llega ? "" : '<span class="sello gris">se queda corto</span>'}
+      <div class="nombre">${o.modelo.nombre}</div><div class="fam">${o.modelo.familia} · ${o.modelo.id}</div>
+      <dl><dt>Coste</dt><dd>${usd(o.coste)}</dd><dt>Tiempo</dt><dd>~${dur(o.segundos)}</dd>
+      <dt>Precio</dt><dd>${o.modelo.entrada} / ${o.modelo.salida} $</dd></dl>
+    </div>`).join("");
+
+  const a = respuesta.answers, s = r.s;
+  const filas = [
+    ["Complejidad", s.cx, a.complejidad.legend?.[Math.round(a.complejidad.score)]?.split(":")[0] ?? ""],
+    ["Riesgo si falla", s.rg, a.riesgo.legend?.[Math.round(a.riesgo.score)]?.split(":")[0] ?? ""],
+    ["Razonamiento", s.rz, ""],
+    ["Contexto", s.ctx, a.contexto.legend?.[Math.round(a.contexto.score)]?.split(":")[0] ?? ""],
+    ["Nivel requerido", r.requerido, "tras aplicar la prioridad"],
+  ];
+  $("senales").innerHTML = `<div class="senal"><span>Tipo</span><span><b>${ETIQUETA_TIPO[s.tipo]}</b> · ${Math.round((a.tipo.probabilities?.[s.tipo] ?? 1) * 100)} %</span><span></span></div>` +
+    filas.map(([n, v, t]) => `<div class="senal"><span>${n}</span><span class="barra" title="${esc(t)}"><i style="width:${Math.round(v * 100)}%"></i></span><span>${Math.round(v * 100)} %</span></div>`).join("");
+  $("meta").textContent = `${respuesta.modeloJev} · ${respuesta.ms} ms · ${respuesta.coste != null ? usd(respuesta.coste) : "coste no informado"} · confianza mínima ${Math.round(s.conf * 100)} %`;
+}
+</script>
+</body>
+</html>

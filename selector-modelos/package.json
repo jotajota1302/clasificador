@@ -1,0 +1,8 @@
+{
+  "name": "selector-modelos-poc",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev.mjs"
+  }
+}

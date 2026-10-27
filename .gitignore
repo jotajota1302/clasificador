@@ -11,3 +11,13 @@ wheels/
 
 # Secretos
 .env
+
+# Capturas de Playwright
+.playwright-mcp/
+
+# Copias de los workflows de ORCHIDIA (internos): se regeneran con
+# `node selector-modelos/sincronizar-workflows.mjs`
+selector-modelos/workflows/
+
+# Vercel
+.vercel/
