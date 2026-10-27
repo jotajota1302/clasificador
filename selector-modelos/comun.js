@@ -49,12 +49,9 @@ const AXET = MODELOS_AXET.map((m) => {
 }).sort((a, b) => a.nivel - b.nivel); // el último es el más capaz: el de reserva y el de la comparativa
 
 export const CATALOGOS = {
-  referencia: { nombre: "Referencia (ppt)", modelos: REFERENCIA },
-  axet: { nombre: `Axet real (${FECHA_AXET})`, boton: "Axet real", modelos: AXET },
-  // Lo que ORCHIDIA usa por defecto: codex, que solo habla con los GPT
-  "axet-gpt": { nombre: `Axet solo GPT (${FECHA_AXET})`, boton: "Axet solo GPT", modelos: AXET.filter((m) => m.cli === CLI) },
+  referencia: { nombre: "OpenAI (tabla de la ppt)", boton: "OpenAI", modelos: REFERENCIA },
+  axet: { nombre: `Modelos Axet (${FECHA_AXET})`, boton: "Modelos Axet", modelos: AXET },
 };
-CATALOGOS.referencia.boton = "Referencia";
 const leerCatalogo = () => {
   const url = new URLSearchParams(location.search).get("catalogo");
   if (CATALOGOS[url]) return url;
@@ -309,9 +306,8 @@ function avisoCatalogo() {
   const calibrar = MODELOS.filter((m) => m.sinCalibrar).map((m) => m.id);
   const corto = MODELOS.find((m) => m.maxTokens && m.maxTokens < 16000);
   return `<b>${esc(CATALOGOS[catalogo].nombre)}</b>, sacado de ORCHIDIA: ${MODELOS.length} modelos. Axet no ofrece Sol ni Astra:
-    su GPT más alto es 5.6 Terra (a 2,5 / 15 $, no a 2 / 12 $ como en la ppt)${catalogo === "axet"
-      ? " y solo Claude Sonnet llega al escalón Sol. Los Claude van con el CLI <code>claude</code>"
-      : ". Es lo que puede usar codex, el CLI por defecto de ORCHIDIA; las etapas que piden más se quedan con Terra"}.
+    su GPT más alto es 5.6 Terra (a 2,5 / 15 $, no a 2 / 12 $ como en la ppt) y solo Claude Sonnet llega al escalón Sol.
+    Los Claude van con el CLI <code>claude</code>.
     Los precios son los de Axet; el nivel y la velocidad de cada modelo son supuestos en la misma escala que la referencia.
     ${corto ? `Ojo con ${esc(corto.nombre)}: Axet lo publica con un tope de salida de ${corto.maxTokens} tokens.` : ""}
     ${calibrar.length ? `Sin calibrar (nivel estimado por precio): ${calibrar.map(esc).join(", ")}.` : ""}`;
