@@ -303,14 +303,7 @@ montarAyuda();
 // ---------- interruptor de catálogo: referencia de la ppt o modelos reales de Axet ----------
 function avisoCatalogo() {
   if (catalogo === "referencia") return "";
-  const calibrar = MODELOS.filter((m) => m.sinCalibrar).map((m) => m.id);
-  const corto = MODELOS.find((m) => m.maxTokens && m.maxTokens < 16000);
-  return `<b>${esc(CATALOGOS[catalogo].nombre)}</b>, sacado de ORCHIDIA: ${MODELOS.length} modelos. Axet no ofrece Sol ni Astra:
-    su GPT más alto es 5.6 Terra (a 2,5 / 15 $, no a 2 / 12 $ como en la ppt) y solo Claude Sonnet llega al escalón Sol.
-    Los Claude van con el CLI <code>claude</code>.
-    Los precios son los de Axet; el nivel y la velocidad de cada modelo son supuestos en la misma escala que la referencia.
-    ${corto ? `Ojo con ${esc(corto.nombre)}: Axet lo publica con un tope de salida de ${corto.maxTokens} tokens.` : ""}
-    ${calibrar.length ? `Sin calibrar (nivel estimado por precio): ${calibrar.map(esc).join(", ")}.` : ""}`;
+  return `Los ${MODELOS.length} modelos que ofrece Axet, con los precios que publica Axet (consultados el ${FECHA_AXET}).`;
 }
 
 function montarCatalogo() {
