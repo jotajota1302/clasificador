@@ -54,7 +54,7 @@
       <div class="kpis" id="kpis"></div>
       <div class="desplazable">
         <table class="tabla">
-          <thead><tr><th>Etapa</th><th class="ocultable">Señales de Jev</th><th>Modelo</th><th>Esfuerzo</th><th class="num">Coste</th><th class="num ocultable">Tiempo</th></tr></thead>
+          <thead><tr><th>Etapa</th><th class="ocultable">Señales de Jev</th><th>Modelo</th><th>Esfuerzo</th><th class="num">Coste</th><th class="num ocultable">Tiempo</th><th class="num">Decidir con Jev</th></tr></thead>
           <tbody id="etapas"></tbody>
         </table>
       </div>
@@ -75,7 +75,8 @@
 </div>
 
 <script type="module">
-import { decidir, estimar, llamarJev, montarPrioridad, chipModelo, usd, dur, esc, txtEsfuerzo, ETIQUETA_TIPO, MODELOS, CLI } from "./comun.js";
+import { decidir, estimar, llamarJev, montarPrioridad, chipModelo, usd, usdJev, vecesMenos, dur, esc, txtEsfuerzo, ETIQUETA_TIPO, MODELOS, cliDe, CATALOGOS } from "./comun.js";
+import * as comun from "./comun.js"; // comun.catalogo cambia con el interruptor
 import { parsearWorkflow } from "./workflow-md.js";
 
 // Workflows de fábrica de ORCHIDIA, extraídos de sus .md por sincronizar-workflows.mjs:
@@ -168,7 +169,7 @@ $("lanzar").addEventListener("click", async () => {
 
 function pintar() {
   const p = prioridad();
-  const filas = datos.wf.etapas.map(({ id, label }, i) => ({ id, label, r: decidir(datos.items[i].answers, p) }));
+  const filas = datos.wf.etapas.map(({ id, label }, i) => ({ id, label, r: decidir(datos.items[i].answers, p), jev: datos.items[i] }));
   $("resultado").classList.remove("oculto");
 
   const total = (f) => filas.reduce((acc, x) => acc + f(x), 0);
@@ -186,10 +187,10 @@ function pintar() {
 
   $("kpis").innerHTML = `
     <div class="kpi"><b>${usd(coste)}</b><span>coste estimado del flujo sugerido</span></div>
-    <div class="kpi"><b>${ahorro >= 0 ? "−" : "+"}${Math.abs(Math.round(ahorro * 100))} %</b><span>frente a hacerlo todo con Astra (${usd(astra.coste)})</span></div>
-    <div class="kpi"><b>${datos.ms} ms</b><span>${datos.items.length} llamadas a Jev en paralelo · ${usd(costeJev)}</span></div>`;
+    <div class="kpi"><b>${ahorro >= 0 ? "−" : "+"}${Math.abs(Math.round(ahorro * 100))} %</b><span>frente a hacerlo todo con ${astra.m.nombre}, el más capaz del catálogo (${usd(astra.coste)})</span></div>
+    <div class="kpi"><b>${usdJev(costeJev)}</b><span>decidir todo el flujo con Jev: ${datos.items.length} llamadas en paralelo, ${datos.ms} ms${vecesMenos(costeJev, coste) ? ` · ${vecesMenos(costeJev, coste)} veces menos que ejecutarlo` : ""}</span></div>`;
 
-  $("etapas").innerHTML = filas.map(({ label, r }) => {
+  $("etapas").innerHTML = filas.map(({ label, r, jev }) => {
     const mini = (n, v) => `<span title="${n} ${Math.round(v * 100)} %"><span class="mini"><i style="width:${Math.round(v * 100)}%"></i></span></span>`;
     return `<tr>
       <td><b>${esc(label)}</b><div class="detalle">${esc(r.porQue)}</div></td>
@@ -197,7 +198,8 @@ function pintar() {
       <td>${chipModelo(r.elegida.modelo)}${r.dudoso ? '<div class="detalle">escalado por duda</div>' : ""}</td>
       <td>${txtEsfuerzo(r.esfuerzo)}</td>
       <td class="num">${usd(r.elegida.coste)}</td>
-      <td class="num ocultable">~${dur(r.elegida.segundos)}</td></tr>`;
+      <td class="num ocultable">~${dur(r.elegida.segundos)}</td>
+      <td class="num jev">${usdJev(jev.coste)}<div class="detalle">${jev.ms} ms</div></td></tr>`;
   }).join("");
 
   const barras = [{ nombre: "Sugerido por Jev", coste, segundos: tiempo, cortas: 0, destacada: true, color: "--acento" },
@@ -209,8 +211,8 @@ function pintar() {
       <span class="cifra">${usd(b.coste)}${b.cortas ? ` <small class="error">· ${b.cortas} corta${b.cortas > 1 ? "s" : ""}</small>` : ""}</span>
     </div>`).join("");
 
-  $("yaml").textContent = `# ${datos.wf.nombre}: motores sugeridos ${datos.caso ? "para el caso" : "en genérico (sin caso)"} (prioridad coste ${p.coste} · calidad ${p.calidad} · tiempo ${p.tiempo})\nstages:\n` +
-    filas.map(({ id, r }) => `  - id: ${id}\n    engine:\n      cli: ${CLI}\n      model: ${r.elegida.modelo.id}\n      effort: ${r.esfuerzo}`).join("\n");
+  $("yaml").textContent = `# ${datos.wf.nombre}: motores sugeridos ${datos.caso ? "para el caso" : "en genérico (sin caso)"} (prioridad coste ${p.coste} · calidad ${p.calidad} · tiempo ${p.tiempo} · catálogo ${CATALOGOS[comun.catalogo].nombre})\nstages:\n` +
+    filas.map(({ id, r }) => `  - id: ${id}\n    engine:\n      cli: ${cliDe(r.elegida.modelo)}\n      model: ${r.elegida.modelo.id}\n      effort: ${r.esfuerzo}`).join("\n");
 }
 
 $("copiar").addEventListener("click", async () => {

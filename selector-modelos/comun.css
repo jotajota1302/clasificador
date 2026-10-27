@@ -144,3 +144,15 @@ pre.json .k { color: var(--sol); } pre.json .s { color: var(--terra); } pre.json
 .propio { margin-top: 10px; display: grid; gap: 8px; }
 .propio textarea { min-height: 150px; font: 13px/1.45 ui-monospace, "Cascadia Code", Consolas, monospace; }
 label.boton { display: inline-block; font-size: 14px; padding: 8px 14px; }
+
+/* Interruptor de catálogo: referencia de la ppt o modelos reales de Axet */
+.catalogo { display: inline-flex; align-items: center; gap: 4px; background: var(--papel); border: 1px solid var(--linea); border-radius: 999px; padding: 4px 4px 4px 12px; font-size: 13px; }
+.catalogo > span { color: var(--suave); margin-right: 4px; }
+.catalogo button { font: 700 13px var(--texto); padding: 5px 12px; border-radius: 999px; border: 0; background: transparent; color: var(--suave); cursor: pointer; }
+.catalogo button[aria-pressed="true"] { background: var(--tinta); color: var(--papel); }
+.aviso-catalogo { margin: 8px 0 0; padding: 10px 14px; border-radius: 10px; font-size: 14px; background: var(--acento-claro); border: 1px solid var(--acento); }
+
+/* Coste de clasificar con Jev: tan pequeño que merece verse */
+.coste-jev { display: inline-flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; margin: 0 0 16px; padding: 6px 12px; border-radius: 999px; font-size: 14px; background: var(--acento-claro); border: 1px solid var(--acento); }
+.coste-jev b { font-variant-numeric: tabular-nums; }
+.tabla .jev { color: var(--acento); font-size: 13px; }
